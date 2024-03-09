@@ -8,7 +8,7 @@ function App() {
       <VideoPlayer
         thumbnail={VideoInfo.waitingImage}
         src={VideoInfo.link}
-        resizeMode="contain"
+        resizeMode="cover"
       />
     </div>
   );

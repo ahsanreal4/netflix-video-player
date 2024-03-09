@@ -1,9 +1,11 @@
+export type ResizeModeType = "fill" | "cover" | "contain";
+
 export interface VideoPlayerProps {
   src: string;
   autoPlay?: boolean;
   muted?: boolean;
   thumbnail?: string;
-  resizeMode?: "fill" | "cover" | "contain";
+  resizeMode?: ResizeModeType;
 }
 
 export enum VideoFormats {

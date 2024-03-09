@@ -1,8 +1,11 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { VideoInfo } from "../../data/VideoPlayer";
-import "./VideoPlayer.css";
-import Hls from "hls.js";
 import { VideoFormats, VideoPlayerProps } from "./VideoPlayer.types";
+
+import classes from "./VideoPlayer.module.css";
+import Overlay from "./components/Overlay/Overlay";
+import useVideoControlEvents from "./hooks/useVideoControlEvents";
+import useLoadVideoSource from "./hooks/useLoadVideoSource";
 
 const VideoPlayer = ({
   autoPlay = false,
@@ -11,83 +14,41 @@ const VideoPlayer = ({
   resizeMode = "fill",
 }: VideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [paused, setPaused] = useState<boolean>(true);
 
-  const getVideoFormat = (link: string): string => {
-    const videoSplit = link.split(".");
-    return videoSplit[videoSplit.length - 1];
-  };
-
-  const isHlsFormat = (format: string) => {
-    return format != VideoFormats.Mp4 && format != VideoFormats.FLV;
-  };
-
-  const playVideoOnMount = () => {
-    // @ts-expect-error
-    if (autoPlay) videoRef.current.play();
-  };
-
-  // @ts-expect-error
-  const playVideo = () => videoRef.current.play();
-
-  // @ts-expect-error
-  const pauseVideo = () => videoRef.current.pause();
-
-  const togglePlayPause = () => {
-    if (videoRef.current?.paused) {
-      playVideo();
-    } else {
-      pauseVideo();
-    }
-  };
-
-  const loadVideoSource = () => {
-    if (!videoRef.current) return;
-
-    const format = getVideoFormat(VideoInfo.link);
-
-    // If not hls format meaning simple video then just run
-    if (!isHlsFormat(format)) {
-      videoRef.current.src = src;
-      videoRef.current.addEventListener("loadedmetadata", function () {
-        playVideoOnMount();
-      });
-
-      return;
-    }
-
-    // If video is hls format
-    if (Hls.isSupported()) {
-      var hls = new Hls();
-      hls.loadSource(src);
-      hls.attachMedia(videoRef.current);
-      playVideoOnMount();
-    }
-  };
-
-  useEffect(() => {
-    if (src.length == 0) return;
-
-    loadVideoSource();
-  }, []);
+  const {
+    togglePlayPause,
+    playVideo,
+    forwardVideo,
+    rewindVideo,
+    toggleVolume,
+    unmute,
+    mute,
+  } = useVideoControlEvents({
+    setPaused,
+    videoRef,
+  });
+  useLoadVideoSource({ autoPlay, playVideo, src, videoRef });
 
   return (
-    <div className="video_container">
-      <div style={{ position: "absolute", top: "45%", left: "48%", zIndex: 2 }}>
-        <button
-          style={{ fontSize: "32px", padding: "5px 10px", borderRadius: 10 }}
-          onClick={() => {
-            togglePlayPause();
-          }}
-        >
-          Play
-        </button>
-      </div>
+    <div className={classes.video_container}>
+      <Overlay
+        togglePlayPause={togglePlayPause}
+        resizeMode={resizeMode}
+        paused={paused}
+        muted={muted}
+        forwardVideo={forwardVideo}
+        rewindVideo={rewindVideo}
+        toggleVolume={toggleVolume}
+        mute={mute}
+        unmute={unmute}
+      />
 
       <video
         ref={videoRef}
         id="video"
         controls={false}
-        className="video"
+        className={classes.video}
         poster={VideoInfo.waitingImage}
         muted={muted}
         style={{ objectFit: resizeMode }}
@@ -96,4 +57,4 @@ const VideoPlayer = ({
   );
 };
 
-export default VideoPlayer;
+export default memo(VideoPlayer);

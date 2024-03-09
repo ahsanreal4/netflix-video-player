@@ -1,0 +1,14 @@
+.video_playback_controls_container {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.image {
+  width: 44px;
+  height: 44px;
+}
+
+.image:hover {
+  cursor: pointer;
+}

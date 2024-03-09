@@ -1,0 +1,17 @@
+.container {
+  background: transparent;
+  width: 100%;
+  position: absolute;
+  height: 13%;
+  bottom: 0;
+  border-top: 3px solid red;
+  padding: 0px 2%;
+}
+
+.controls_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 85%;
+  width: 100%;
+}
