@@ -1,0 +1,22 @@
+.icon {
+  height: 40px;
+  width: 40px;
+  transition: height 0.4s;
+}
+
+.icon:hover {
+  cursor: pointer;
+  height: 48px;
+  width: 48px;
+}
+
+video::-webkit-media-controls {
+  display: none !important;
+}
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+/* Style to hide the default fullscreen button */
+video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}

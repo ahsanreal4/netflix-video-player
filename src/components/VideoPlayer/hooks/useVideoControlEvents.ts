@@ -1,15 +1,18 @@
-import { RefObject } from "react";
+import { RefObject, useEffect, useState } from "react";
 import { Volume } from "../VideoPlayer.types";
 
 interface UseVideoControlEventsProps {
   videoRef: RefObject<HTMLVideoElement>;
-  setPaused: React.Dispatch<React.SetStateAction<boolean>>;
+  fullScreenOnStart: boolean;
 }
 
 const useVideoControlEvents = ({
-  setPaused,
   videoRef,
+  fullScreenOnStart,
 }: UseVideoControlEventsProps) => {
+  const [paused, setPaused] = useState<boolean>(true);
+  const [fullScreen, setFullScreen] = useState<boolean>(fullScreenOnStart);
+
   const playVideo = () => {
     if (!videoRef.current) return;
 
@@ -58,6 +61,85 @@ const useVideoControlEvents = ({
 
   const unmute = () => toggleVolume();
 
+  const addFullScreenEventListener = () => {
+    document
+      .getElementById("video-main_container_999")
+      ?.addEventListener("fullscreenchange", (event) => {
+        // If full screen
+        if (document.fullscreenElement) {
+        }
+        // If exiting fullscreen
+        else {
+          setFullScreen(false);
+        }
+      });
+  };
+
+  const removeFullScreenEventListener = () => {
+    document
+      .getElementById("video-main_container_999")
+      ?.removeEventListener("fullscreenchange", () => {});
+  };
+
+  const exitFullscreen = () => {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+      // @ts-ignore
+    } else if (document.mozCancelFullScreen) {
+      // @ts-ignore
+      document.mozCancelFullScreen();
+      // @ts-ignore
+    } else if (document.webkitExitFullscreen) {
+      // @ts-ignore
+      document.webkitExitFullscreen();
+    }
+    // @ts-ignore
+    else if (document.msExitFullscreen) {
+      // @ts-ignore
+      document.msExitFullscreen();
+    }
+
+    setFullScreen(false);
+  };
+
+  const enterFullScreen = () => {
+    if (!videoRef.current) return;
+
+    document.getElementById("video-main_container_999")?.requestFullscreen();
+
+    // if (videoRef.current.requestFullscreen) {
+    //   videoRef.current.requestFullscreen();
+    //   // @ts-ignore
+    // } else if (videoRef.current.webkitRequestFullscreen) {
+    //   /* Safari */
+    //   // @ts-ignore
+    //   videoRef.current.webkitRequestFullscreen();
+    //   // @ts-ignore
+    // } else if (videoRef.current.msRequestFullscreen) {
+    //   /* IE11 */
+    //   // @ts-ignore
+    //   videoRef.current.msRequestFullscreen();
+    // }
+
+    setFullScreen(true);
+  };
+
+  const toggleFullScreen = () => {
+    if (fullScreen) {
+      exitFullscreen();
+    } else {
+      enterFullScreen();
+    }
+  };
+
+  useEffect(() => {
+    addFullScreenEventListener();
+
+    return () => {
+      removeFullScreenEventListener();
+    };
+  }, []);
+
   return {
     togglePlayPause,
     playVideo,
@@ -67,6 +149,9 @@ const useVideoControlEvents = ({
     toggleVolume,
     mute,
     unmute,
+    paused,
+    fullScreen,
+    toggleFullScreen,
   };
 };
 

@@ -28,7 +28,7 @@ const VolumeButton = ({
   const timeoutRef = useRef<NodeJS.Timeout>();
   const isMouseOnSliderRef = useRef<boolean>(false);
   const [volume, setVolume] = useState(muted ? Volume.Mute : Volume.Full);
-  const [displayVolumeSlider, setDisplayVolumeSlider] = useState(true);
+  const [displayVolumeSlider, setDisplayVolumeSlider] = useState(false);
 
   const handleVolumeClick = () => {
     if (volume == 0) {
@@ -61,17 +61,13 @@ const VolumeButton = ({
           }, 500);
         }}
       >
-        {volume == Volume.Mute ? (
-          <VolumeMute className={classes.volume_icon} />
-        ) : null}
-        {volume >= Volume.MidPoint ? (
-          <VolumeFull className={classes.volume_icon} />
-        ) : null}
+        {volume == Volume.Mute ? <VolumeMute className={"icon"} /> : null}
+        {volume >= Volume.MidPoint ? <VolumeFull className={"icon"} /> : null}
         {volume != Volume.Mute && volume <= Volume.LowPoint ? (
-          <VolumeLow className={classes.volume_icon} />
+          <VolumeLow className={"icon"} />
         ) : null}
         {volume > Volume.LowPoint && volume < Volume.MidPoint ? (
-          <VolumeMid className={classes.volume_icon} />
+          <VolumeMid className={"icon"} />
         ) : null}
       </div>
       {displayVolumeSlider ? (

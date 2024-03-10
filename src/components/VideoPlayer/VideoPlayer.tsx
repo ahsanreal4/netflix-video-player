@@ -1,20 +1,24 @@
-import { memo, useRef, useState } from "react";
+import { memo, useMemo, useRef } from "react";
 import { VideoInfo } from "../../data/VideoPlayer";
-import { VideoPlayerProps } from "./VideoPlayer.types";
+import { VideoDefaultControls, VideoPlayerProps } from "./VideoPlayer.types";
 
 import classes from "./VideoPlayer.module.css";
 import Overlay from "./components/Overlay/Overlay";
 import useVideoControlEvents from "./hooks/useVideoControlEvents";
 import useLoadVideoSource from "./hooks/useLoadVideoSource";
 
+import "./VideoPlayer.css";
+
 const VideoPlayer = ({
   autoPlay = false,
   muted = false,
   src = "",
   resizeMode = "fill",
+  fullScreenOnStart = false,
+  disableControls = false,
+  controls = VideoDefaultControls,
 }: VideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [paused, setPaused] = useState<boolean>(true);
 
   const {
     togglePlayPause,
@@ -24,14 +28,32 @@ const VideoPlayer = ({
     toggleVolume,
     unmute,
     mute,
+    paused,
+    toggleFullScreen,
+    fullScreen,
   } = useVideoControlEvents({
-    setPaused,
     videoRef,
+    fullScreenOnStart,
   });
   useLoadVideoSource({ autoPlay, playVideo, src, videoRef });
 
+  const Video = useMemo(
+    () => (
+      <video
+        ref={videoRef}
+        id="video"
+        controls={false}
+        className={classes.video}
+        poster={VideoInfo.waitingImage}
+        muted={muted}
+        style={{ objectFit: resizeMode }}
+      />
+    ),
+    [muted]
+  );
+
   return (
-    <div className={classes.video_container}>
+    <div id="video-main_container_999" className={classes.video_container}>
       <Overlay
         togglePlayPause={togglePlayPause}
         resizeMode={resizeMode}
@@ -42,17 +64,13 @@ const VideoPlayer = ({
         toggleVolume={toggleVolume}
         mute={mute}
         unmute={unmute}
+        toggleFullScreen={toggleFullScreen}
+        fullscreen={fullScreen}
+        disableControls={disableControls}
+        controls={controls}
       />
 
-      <video
-        ref={videoRef}
-        id="video"
-        controls={false}
-        className={classes.video}
-        poster={VideoInfo.waitingImage}
-        muted={muted}
-        style={{ objectFit: resizeMode }}
-      />
+      {Video}
     </div>
   );
 };
