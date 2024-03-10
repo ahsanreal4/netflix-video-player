@@ -15,6 +15,7 @@ interface VolumeButtonProps {
   mute: () => void;
   unmute: () => void;
   toggleVolume: (volume?: number) => void;
+  color?: string;
 }
 
 const VolumeButton = ({
@@ -22,11 +23,12 @@ const VolumeButton = ({
   muted,
   toggleVolume,
   unmute,
+  color = "red",
 }: VolumeButtonProps) => {
   const timeoutRef = useRef<NodeJS.Timeout>();
   const isMouseOnSliderRef = useRef<boolean>(false);
   const [volume, setVolume] = useState(muted ? Volume.Mute : Volume.Full);
-  const [displayVolumeSlider, setDisplayVolumeSlider] = useState(false);
+  const [displayVolumeSlider, setDisplayVolumeSlider] = useState(true);
 
   const handleVolumeClick = () => {
     if (volume == 0) {
@@ -45,7 +47,7 @@ const VolumeButton = ({
         onMouseEnter={() => {
           timeoutRef.current = setTimeout(() => {
             setDisplayVolumeSlider(true);
-          }, 1000);
+          }, 300);
         }}
         onMouseLeave={() => {
           clearTimeout(timeoutRef.current);
@@ -80,20 +82,25 @@ const VolumeButton = ({
           onMouseLeave={() => {
             isMouseOnSliderRef.current = false;
             setTimeout(() => {
+              if (isMouseOnSliderRef.current == true) return;
+
               setDisplayVolumeSlider(false);
             }, 500);
           }}
           className={classes.slider_container}
         >
           <Slider
-            dotStyle={{ color: "red" }}
-            trackStyle={{ backgroundColor: "gray" }}
-            activeDotStyle={{ color: "red" }}
-            handleStyle={{
-              color: "red",
-              backgroundColor: "red",
-              borderColor: "red",
+            styles={{
+              track: { backgroundColor: color },
+              handle: {
+                color: color,
+                backgroundColor: color,
+                borderColor: color,
+              },
+              rail: {},
             }}
+            dotStyle={{ color: color }}
+            activeDotStyle={{ color: color }}
             vertical
             onChange={(value: number | number[]) => {
               if (typeof value == "number") {

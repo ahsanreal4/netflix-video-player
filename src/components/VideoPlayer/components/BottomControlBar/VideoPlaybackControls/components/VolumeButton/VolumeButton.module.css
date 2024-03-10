@@ -9,9 +9,9 @@
 
 .slider_container {
   height: 200px;
-  background-color: lightgray;
+  background-color: gray;
   padding: 10px;
   position: absolute;
   bottom: 105px;
-  margin-left: 15px;
+  margin-left: 7px;
 }
