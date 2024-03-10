@@ -1,9 +1,9 @@
-function VolumeFull({
+const VolumeFull = ({
   width = "24",
   height = "24",
   color = "white",
   className = "image",
-}) {
+}) => {
   return (
     <svg
       width={width}
@@ -21,6 +21,6 @@ function VolumeFull({
       ></path>
     </svg>
   );
-}
+};
 
 export default VolumeFull;

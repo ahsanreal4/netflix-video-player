@@ -1,4 +1,5 @@
 import { RefObject } from "react";
+import { Volume } from "../VideoPlayer.types";
 
 interface UseVideoControlEventsProps {
   videoRef: RefObject<HTMLVideoElement>;
@@ -45,13 +46,15 @@ const useVideoControlEvents = ({
     videoRef.current.currentTime -= time;
   };
 
-  const toggleVolume = (volume: number = 100) => {
+  const toggleVolume = (volume: number = Volume.Full) => {
     if (!videoRef.current) return;
 
     videoRef.current.volume = volume;
   };
 
-  const mute = () => toggleVolume(0);
+  const mute = () => {
+    toggleVolume(Volume.Mute);
+  };
 
   const unmute = () => toggleVolume();
 

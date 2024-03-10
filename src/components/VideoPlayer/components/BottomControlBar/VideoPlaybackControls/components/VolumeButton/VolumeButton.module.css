@@ -1,0 +1,17 @@
+.volume_icon {
+  width: 44px;
+  height: 44px;
+}
+
+.volume_icon:hover {
+  cursor: pointer;
+}
+
+.slider_container {
+  height: 200px;
+  background-color: lightgray;
+  padding: 10px;
+  position: absolute;
+  bottom: 105px;
+  margin-left: 15px;
+}

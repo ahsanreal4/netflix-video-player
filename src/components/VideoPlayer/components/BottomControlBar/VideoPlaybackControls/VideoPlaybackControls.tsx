@@ -1,9 +1,7 @@
-import { useState } from "react";
-import ForwardTime from "../../../assets/forward-time";
-import RewindTime from "../../../assets/rewind-time";
-import { Images } from "../../../VideoPlayer.assets";
-
 import classes from "./VideoPlaybackControls.module.css";
+
+import PlayPauseButton from "./components/PlayPauseButton/PlayPauseButton";
+import VolumeButton from "./components/VolumeButton/VolumeButton";
 
 interface VideoPlaybackControlsProps {
   paused: boolean;
@@ -26,33 +24,20 @@ const VideoPlaybackControls = ({
   toggleVolume,
   unmute,
 }: VideoPlaybackControlsProps) => {
-  const [volume, setVolume] = useState(muted ? 0 : 100);
-  console.log(volume);
-
   return (
     <div className={classes.video_playback_controls_container}>
-      <img
-        className={classes.image}
-        // @ts-expect-error
-        src={paused ? Images.Play : Images.Pause}
-        width={32}
-        height={32}
-        onClick={togglePlayPause}
+      <PlayPauseButton
+        forwardVideo={forwardVideo}
+        rewindVideo={rewindVideo}
+        togglePlayPause={togglePlayPause}
+        paused={paused}
       />
-      <div
-        onClick={() => {
-          rewindVideo();
-        }}
-      >
-        <RewindTime className={classes.image} />
-      </div>
-      <div
-        onClick={() => {
-          forwardVideo();
-        }}
-      >
-        <ForwardTime className={classes.image} />
-      </div>
+      <VolumeButton
+        mute={mute}
+        muted={muted}
+        toggleVolume={toggleVolume}
+        unmute={unmute}
+      />
     </div>
   );
 };

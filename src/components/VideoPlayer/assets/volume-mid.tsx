@@ -1,9 +1,9 @@
-function VolumeMid({
+const VolumeMid = ({
   width = "24",
   height = "24",
   color = "white",
   className = "image",
-}) {
+}) => {
   return (
     <svg
       width={width}
@@ -21,6 +21,6 @@ function VolumeMid({
       ></path>
     </svg>
   );
-}
+};
 
 export default VolumeMid;

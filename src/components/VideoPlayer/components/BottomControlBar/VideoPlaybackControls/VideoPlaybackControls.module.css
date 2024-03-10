@@ -12,3 +12,16 @@
 .image:hover {
   cursor: pointer;
 }
+
+body {
+  background-color: #000;
+}
+
+.title {
+  user-select: none;
+  color: #fff;
+  font-family: monospace;
+  font-weight: bold;
+  text-align: center;
+  margin: 42px auto 0;
+}

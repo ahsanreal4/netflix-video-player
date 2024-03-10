@@ -1,6 +1,6 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { VideoInfo } from "../../data/VideoPlayer";
-import { VideoFormats, VideoPlayerProps } from "./VideoPlayer.types";
+import { VideoPlayerProps } from "./VideoPlayer.types";
 
 import classes from "./VideoPlayer.module.css";
 import Overlay from "./components/Overlay/Overlay";
