@@ -52,7 +52,7 @@ const VolumeButton = ({ color = "red" }) => {
             if (isMouseOnSliderRef.current == true) return;
 
             setDisplayVolumeSlider(false);
-          }, 1000);
+          }, 1500);
         }}
       >
         {volume == Volume.Mute ? <VolumeMute className={"icon"} /> : null}
@@ -75,7 +75,7 @@ const VolumeButton = ({ color = "red" }) => {
               if (isMouseOnSliderRef.current == true) return;
 
               setDisplayVolumeSlider(false);
-            }, 1000);
+            }, 1500);
           }}
           className={classes.slider_container}
         >
