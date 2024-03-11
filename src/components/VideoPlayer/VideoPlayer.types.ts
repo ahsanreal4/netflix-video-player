@@ -9,7 +9,6 @@ export interface Controls {
 
 export interface VideoPlayerProps {
   src: string;
-  fullScreenOnStart?: boolean;
   autoPlay?: boolean;
   muted?: boolean;
   thumbnail?: string;
@@ -18,11 +17,31 @@ export interface VideoPlayerProps {
   controls?: Controls;
 }
 
+export interface IVideoPlayerDefaultProps {
+  src: string;
+  autoPlay: boolean;
+  muted: boolean;
+  thumbnail: string;
+  resizeMode: ResizeModeType;
+  disableControls: boolean;
+  controls: Controls;
+}
+
 export const VideoDefaultControls: Controls = {
   disableForwardRewindButtons: false,
   disableFullScreenButton: false,
   disablePlayPauseButton: false,
   disableVolumeButton: false,
+};
+
+export const VideoPlayerDefaultProps: IVideoPlayerDefaultProps = {
+  autoPlay: false,
+  muted: false,
+  src: "",
+  resizeMode: "fill",
+  disableControls: false,
+  controls: VideoDefaultControls,
+  thumbnail: "",
 };
 
 export enum VideoFormats {

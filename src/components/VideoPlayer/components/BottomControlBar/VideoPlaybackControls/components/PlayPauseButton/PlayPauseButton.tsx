@@ -1,25 +1,16 @@
 import ForwardTime from "../../../../../assets/forward-time";
 import RewindTime from "../../../../../assets/rewind-time";
+import { useVideoContext } from "../../../../../context/VideoContextProvider";
+import useVideoControlEvents from "../../../../../hooks/useVideoControlEvents";
 import { Images } from "../../../../../VideoPlayer.assets";
-import { Controls } from "../../../../../VideoPlayer.types";
 
-import classes from "./PlayPauseButton.module.css";
+const PlayPauseButton = () => {
+  const { videoPlayerProps, paused } = useVideoContext();
+  const { controls } = videoPlayerProps;
 
-interface PlayPauseButtonProps {
-  togglePlayPause: () => void;
-  forwardVideo: (time?: number) => void;
-  rewindVideo: (time?: number) => void;
-  paused: boolean;
-  controls: Controls;
-}
+  const { togglePlayPause, forwardVideo, rewindVideo } =
+    useVideoControlEvents();
 
-const PlayPauseButton = ({
-  forwardVideo,
-  rewindVideo,
-  togglePlayPause,
-  paused,
-  controls,
-}: PlayPauseButtonProps) => {
   return (
     <>
       {controls.disablePlayPauseButton ? null : (

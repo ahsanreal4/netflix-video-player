@@ -1,5 +1,5 @@
 import "./App.css";
-import VideoPlayer from "./components/VideoPlayer/VideoPlayer";
+import VideoPlayer from "./components/VideoPlayer/VideoPlayerContextWrapper";
 import { VideoInfo } from "./data/VideoPlayer";
 
 function App() {

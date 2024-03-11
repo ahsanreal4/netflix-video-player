@@ -1,20 +1,12 @@
-import { RefObject, useEffect } from "react";
+import { useEffect } from "react";
 import { VideoFormats } from "../VideoPlayer.types";
 import Hls from "hls.js";
+import { useVideoContext } from "../context/VideoContextProvider";
 
-interface UseLoadVideoSourceProps {
-  src: string;
-  videoRef: RefObject<HTMLVideoElement>;
-  autoPlay: boolean;
-  playVideo: () => void;
-}
+const useLoadVideoSource = (playVideo: () => void) => {
+  const { videoPlayerProps, videoRef } = useVideoContext();
+  const { src, autoPlay } = videoPlayerProps;
 
-const useLoadVideoSource = ({
-  autoPlay,
-  playVideo,
-  src,
-  videoRef,
-}: UseLoadVideoSourceProps) => {
   const isHlsFormat = (format: string) => {
     return format != VideoFormats.Mp4 && format != VideoFormats.FLV;
   };
@@ -56,7 +48,7 @@ const useLoadVideoSource = ({
     if (src.length == 0) return;
 
     loadVideoSource();
-  }, []);
+  }, [src]);
 
   return null;
 };

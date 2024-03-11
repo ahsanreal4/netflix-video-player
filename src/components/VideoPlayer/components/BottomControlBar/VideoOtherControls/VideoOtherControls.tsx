@@ -2,21 +2,18 @@ import { memo } from "react";
 
 import EnterFullScreen from "../../../assets/enter-full-screen";
 
-import classes from "./VideoOtherControls.module.css";
 import ExitFullScreen from "../../../assets/exit-full-screen";
-import { Controls } from "../../../VideoPlayer.types";
+import { useVideoContext } from "../../../context/VideoContextProvider";
+import useVideoControlEvents from "../../../hooks/useVideoControlEvents";
 
-interface VideoOtherControlsProps {
-  fullscreen: boolean;
-  controls: Controls;
-  toggleFullScreen: () => void;
-}
+import classes from "./VideoOtherControls.module.css";
 
-const VideoOtherControls = ({
-  fullscreen,
-  toggleFullScreen,
-  controls,
-}: VideoOtherControlsProps) => {
+const VideoOtherControls = () => {
+  const { videoPlayerProps, fullscreen } = useVideoContext();
+  const { controls } = videoPlayerProps;
+
+  const { toggleFullScreen } = useVideoControlEvents();
+
   return (
     <div>
       {controls.disableFullScreenButton ? null : (

@@ -9,26 +9,20 @@ import VolumeLow from "../../../../../assets/volume-low";
 import VolumeMid from "../../../../../assets/volume-mid";
 
 import "rc-slider/assets/index.css";
+import { useVideoContext } from "../../../../../context/VideoContextProvider";
+import useVideoControlEvents from "../../../../../hooks/useVideoControlEvents";
 
-interface VolumeButtonProps {
-  muted: boolean;
-  mute: () => void;
-  unmute: () => void;
-  toggleVolume: (volume?: number) => void;
-  color?: string;
-}
-
-const VolumeButton = ({
-  mute,
-  muted,
-  toggleVolume,
-  unmute,
-  color = "red",
-}: VolumeButtonProps) => {
+const VolumeButton = ({ color = "red" }) => {
   const timeoutRef = useRef<NodeJS.Timeout>();
   const isMouseOnSliderRef = useRef<boolean>(false);
+
+  const { videoPlayerProps } = useVideoContext();
+  const { muted } = videoPlayerProps;
+
   const [volume, setVolume] = useState(muted ? Volume.Mute : Volume.Full);
   const [displayVolumeSlider, setDisplayVolumeSlider] = useState(false);
+
+  const { unmute, mute, toggleVolume } = useVideoControlEvents();
 
   const handleVolumeClick = () => {
     if (volume == 0) {
@@ -58,7 +52,7 @@ const VolumeButton = ({
             if (isMouseOnSliderRef.current == true) return;
 
             setDisplayVolumeSlider(false);
-          }, 500);
+          }, 1000);
         }}
       >
         {volume == Volume.Mute ? <VolumeMute className={"icon"} /> : null}
@@ -81,7 +75,7 @@ const VolumeButton = ({
               if (isMouseOnSliderRef.current == true) return;
 
               setDisplayVolumeSlider(false);
-            }, 500);
+            }, 1000);
           }}
           className={classes.slider_container}
         >

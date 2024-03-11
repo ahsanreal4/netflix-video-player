@@ -1,17 +1,10 @@
-import { RefObject, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Volume } from "../VideoPlayer.types";
+import { useVideoContext } from "../context/VideoContextProvider";
 
-interface UseVideoControlEventsProps {
-  videoRef: RefObject<HTMLVideoElement>;
-  fullScreenOnStart: boolean;
-}
-
-const useVideoControlEvents = ({
-  videoRef,
-  fullScreenOnStart,
-}: UseVideoControlEventsProps) => {
-  const [paused, setPaused] = useState<boolean>(true);
-  const [fullScreen, setFullScreen] = useState<boolean>(fullScreenOnStart);
+const useVideoControlEvents = () => {
+  const { paused, fullscreen, setPaused, setFullscreen, videoRef } =
+    useVideoContext();
 
   const playVideo = () => {
     if (!videoRef.current) return;
@@ -70,7 +63,7 @@ const useVideoControlEvents = ({
         }
         // If exiting fullscreen
         else {
-          setFullScreen(false);
+          setFullscreen(false);
         }
       });
   };
@@ -99,7 +92,7 @@ const useVideoControlEvents = ({
       document.msExitFullscreen();
     }
 
-    setFullScreen(false);
+    setFullscreen(false);
   };
 
   const enterFullScreen = () => {
@@ -107,25 +100,11 @@ const useVideoControlEvents = ({
 
     document.getElementById("video-main_container_999")?.requestFullscreen();
 
-    // if (videoRef.current.requestFullscreen) {
-    //   videoRef.current.requestFullscreen();
-    //   // @ts-ignore
-    // } else if (videoRef.current.webkitRequestFullscreen) {
-    //   /* Safari */
-    //   // @ts-ignore
-    //   videoRef.current.webkitRequestFullscreen();
-    //   // @ts-ignore
-    // } else if (videoRef.current.msRequestFullscreen) {
-    //   /* IE11 */
-    //   // @ts-ignore
-    //   videoRef.current.msRequestFullscreen();
-    // }
-
-    setFullScreen(true);
+    setFullscreen(true);
   };
 
   const toggleFullScreen = () => {
-    if (fullScreen) {
+    if (fullscreen) {
       exitFullscreen();
     } else {
       enterFullScreen();
@@ -150,7 +129,6 @@ const useVideoControlEvents = ({
     mute,
     unmute,
     paused,
-    fullScreen,
     toggleFullScreen,
   };
 };
