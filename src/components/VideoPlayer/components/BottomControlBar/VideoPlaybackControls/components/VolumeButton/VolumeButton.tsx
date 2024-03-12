@@ -13,7 +13,7 @@ import { useVideoContext } from "../../../../../context/VideoContextProvider";
 import useVideoControlEvents from "../../../../../hooks/useVideoControlEvents";
 
 const VolumeButton = ({ color = "red" }) => {
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const isMouseOnVolumeIconRef = useRef<boolean>(false);
   const isMouseOnSliderRef = useRef<boolean>(false);
 
   const { videoPlayerProps } = useVideoContext();
@@ -34,24 +34,40 @@ const VolumeButton = ({ color = "red" }) => {
     }
   };
 
+  const showSlider = () => {
+    if (!isMouseOnVolumeIconRef.current) return;
+
+    setDisplayVolumeSlider(true);
+  };
+
+  const hideSlider = () => {
+    if (
+      isMouseOnSliderRef.current == true ||
+      isMouseOnVolumeIconRef.current == true
+    )
+      return;
+
+    setDisplayVolumeSlider(false);
+  };
+
   return (
     <div>
       <div
         onClick={handleVolumeClick}
         onMouseEnter={() => {
-          timeoutRef.current = setTimeout(() => {
-            setDisplayVolumeSlider(true);
+          isMouseOnVolumeIconRef.current = true;
+
+          setTimeout(() => {
+            showSlider();
           }, 300);
         }}
         onMouseLeave={() => {
-          clearTimeout(timeoutRef.current);
+          isMouseOnVolumeIconRef.current = false;
 
           if (displayVolumeSlider != true) return;
 
           setTimeout(() => {
-            if (isMouseOnSliderRef.current == true) return;
-
-            setDisplayVolumeSlider(false);
+            hideSlider();
           }, 1500);
         }}
       >
@@ -71,10 +87,9 @@ const VolumeButton = ({ color = "red" }) => {
           }}
           onMouseLeave={() => {
             isMouseOnSliderRef.current = false;
-            setTimeout(() => {
-              if (isMouseOnSliderRef.current == true) return;
 
-              setDisplayVolumeSlider(false);
+            setTimeout(() => {
+              hideSlider();
             }, 1500);
           }}
           className={classes.slider_container}

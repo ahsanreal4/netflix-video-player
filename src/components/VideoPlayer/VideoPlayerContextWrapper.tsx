@@ -1,13 +1,49 @@
-import VideoPlayer from "./VideoPlayer";
+import { memo, useEffect, useMemo } from "react";
+import { VideoInfo } from "../../data/VideoPlayer";
 import { VideoPlayerProps } from "./VideoPlayer.types";
-import { VideoContextProvider } from "./context/VideoContextProvider";
 
-const VideoPlayerContextWrapper = (props: VideoPlayerProps) => {
+import classes from "./VideoPlayer.module.css";
+import Overlay from "./components/Overlay/Overlay";
+import useVideoControlEvents from "./hooks/useVideoControlEvents";
+import useLoadVideoSource from "./hooks/useLoadVideoSource";
+
+import "./VideoPlayer.css";
+import { useVideoContext } from "./context/VideoContextProvider";
+
+const VideoPlayer = (props: VideoPlayerProps) => {
+  const { initializeVideoProps, videoRef, videoPlayerProps } =
+    useVideoContext();
+  const { muted, resizeMode } = videoPlayerProps;
+
+  const { playVideo } = useVideoControlEvents();
+  useLoadVideoSource(playVideo);
+
+  useEffect(() => {
+    initializeVideoProps(props);
+  }, []);
+
+  const Video = useMemo(
+    () => (
+      <video
+        ref={videoRef}
+        id="video"
+        controls={false}
+        className={classes.video}
+        poster={VideoInfo.waitingImage}
+        muted={muted}
+        style={{ objectFit: resizeMode }}
+      />
+    ),
+    [muted, resizeMode]
+  );
+
   return (
-    <VideoContextProvider>
-      <VideoPlayer {...props} />
-    </VideoContextProvider>
+    <div id="video-main_container_999" className={classes.video_container}>
+      <Overlay />
+
+      {Video}
+    </div>
   );
 };
 
-export default VideoPlayerContextWrapper;
+export default memo(VideoPlayer);

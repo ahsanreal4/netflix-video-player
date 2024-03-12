@@ -4,11 +4,16 @@
   position: absolute;
   height: 13%;
   bottom: 0;
-  border-top: 3px solid red;
   padding: 0px 2%;
 }
 
 .controls_container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.playback_controls_container {
   display: flex;
   justify-content: space-between;
   align-items: center;
