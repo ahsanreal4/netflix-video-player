@@ -117,6 +117,7 @@ const VolumeButton = ({ color = "red" }) => {
             }}
             defaultValue={volume * 100}
             value={volume * 100}
+            step={0.1}
           />
         </div>
       ) : null}

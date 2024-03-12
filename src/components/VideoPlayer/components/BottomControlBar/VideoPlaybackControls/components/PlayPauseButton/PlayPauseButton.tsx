@@ -5,7 +5,7 @@ import useVideoControlEvents from "../../../../../hooks/useVideoControlEvents";
 import { Images } from "../../../../../VideoPlayer.assets";
 
 const PlayPauseButton = () => {
-  const { videoPlayerProps, paused } = useVideoContext();
+  const { videoPlayerProps, paused, isLiveVideo } = useVideoContext();
   const { controls } = videoPlayerProps;
 
   const { togglePlayPause, forwardVideo, rewindVideo } =
@@ -23,7 +23,7 @@ const PlayPauseButton = () => {
           onClick={togglePlayPause}
         />
       )}
-      {controls.disableForwardRewindButtons ? null : (
+      {isLiveVideo || controls.disableForwardRewindButtons ? null : (
         <>
           <div
             onClick={() => {

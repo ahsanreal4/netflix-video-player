@@ -1,16 +1,17 @@
 .container {
-  background: transparent;
+  background-color: rgb(0, 0, 0, 0.2);
   width: 100%;
   position: absolute;
-  height: 13%;
   bottom: 0;
   padding: 0px 2%;
+  padding-bottom: 20px;
+  padding-top: 30px;
 }
 
 .controls_container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
 }
 
 .playback_controls_container {

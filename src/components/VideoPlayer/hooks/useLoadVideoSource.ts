@@ -7,8 +7,15 @@ const useLoadVideoSource = (playVideo: () => void) => {
   const { videoPlayerProps, videoRef } = useVideoContext();
   const { src, autoPlay } = videoPlayerProps;
 
-  const isHlsFormat = (format: string) => {
-    return format != VideoFormats.Mp4 && format != VideoFormats.FLV;
+  const isSimpleVideoFormat = (format: string) => {
+    const SIMPLE_VIDEO_FORMATS: string[] = [
+      VideoFormats.FLV,
+      VideoFormats.MOV,
+      VideoFormats.MPEG4,
+      VideoFormats.MP4,
+    ];
+
+    return SIMPLE_VIDEO_FORMATS.includes(format);
   };
 
   const getVideoFormat = (link: string): string => {
@@ -26,7 +33,7 @@ const useLoadVideoSource = (playVideo: () => void) => {
     const format = getVideoFormat(src);
 
     // If not hls format meaning simple video then just run
-    if (!isHlsFormat(format)) {
+    if (isSimpleVideoFormat(format)) {
       videoRef.current.src = src;
       videoRef.current.addEventListener("loadedmetadata", function () {
         playVideoOnMount();
@@ -40,8 +47,13 @@ const useLoadVideoSource = (playVideo: () => void) => {
       var hls = new Hls();
       hls.loadSource(src);
       hls.attachMedia(videoRef.current);
-      playVideoOnMount();
+    } else if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
+      videoRef.current.src = src;
+    } else {
+      videoRef.current.src = src;
     }
+
+    playVideoOnMount();
   };
 
   useEffect(() => {

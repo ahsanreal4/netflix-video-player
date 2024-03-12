@@ -15,6 +15,7 @@ export interface VideoPlayerProps {
   resizeMode?: ResizeModeType;
   disableControls?: boolean;
   controls?: Controls;
+  loopVideo?: boolean;
 }
 
 export interface IVideoPlayerDefaultProps {
@@ -25,6 +26,7 @@ export interface IVideoPlayerDefaultProps {
   resizeMode: ResizeModeType;
   disableControls: boolean;
   controls: Controls;
+  loopVideo: boolean;
 }
 
 export const VideoDefaultControls: Controls = {
@@ -42,11 +44,14 @@ export const VideoPlayerDefaultProps: IVideoPlayerDefaultProps = {
   disableControls: false,
   controls: VideoDefaultControls,
   thumbnail: "",
+  loopVideo: false,
 };
 
 export enum VideoFormats {
-  Mp4 = "mp4",
+  MP4 = "mp4",
   FLV = "flv",
+  MOV = "mov",
+  MPEG4 = "mpeg-4",
 }
 
 export enum Volume {

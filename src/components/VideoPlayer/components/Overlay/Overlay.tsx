@@ -4,11 +4,13 @@ import BottomControlBar from "../BottomControlBar/BottomControlBar";
 import { useVideoContext } from "../../context/VideoContextProvider";
 
 const Overlay = () => {
-  const { videoPlayerProps } = useVideoContext();
+  const { videoPlayerProps, videoLoaded } = useVideoContext();
 
   return (
     <div className={classes.overlay_container}>
-      {videoPlayerProps.disableControls ? null : <BottomControlBar />}
+      {videoLoaded == false || videoPlayerProps.disableControls ? null : (
+        <BottomControlBar />
+      )}
     </div>
   );
 };

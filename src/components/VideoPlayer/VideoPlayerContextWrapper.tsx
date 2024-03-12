@@ -32,6 +32,10 @@ const VideoPlayer = (props: VideoPlayerProps) => {
         poster={VideoInfo.waitingImage}
         muted={muted}
         style={{ objectFit: resizeMode }}
+        preload="auto"
+        // onCanPlay={() => {
+        //   console.log("yes");
+        // }}
       />
     ),
     [muted, resizeMode]
