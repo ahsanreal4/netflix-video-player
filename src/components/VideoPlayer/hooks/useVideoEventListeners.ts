@@ -1,8 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useVideoContext } from "../context/VideoContextProvider";
 
+const VIDEO_CONTAINER_ID = "video-main_container_999";
+
 const useVideoEventListeners = () => {
   const prevDurationRef = useRef<number>(0);
+  const mouseMoveTimeoutRef = useRef<NodeJS.Timeout>();
 
   const {
     setFullscreen,
@@ -11,11 +14,12 @@ const useVideoEventListeners = () => {
     isLiveVideo,
     setIsLiveVideo,
     setPaused,
+    setShowOverlay,
   } = useVideoContext();
 
   const addFullScreenEventListener = () => {
     document
-      .getElementById("video-main_container_999")
+      .getElementById(VIDEO_CONTAINER_ID)
       ?.addEventListener("fullscreenchange", (event) => {
         // If full screen
         if (document.fullscreenElement) {
@@ -29,7 +33,7 @@ const useVideoEventListeners = () => {
 
   const removeFullScreenEventListener = () => {
     document
-      .getElementById("video-main_container_999")
+      .getElementById(VIDEO_CONTAINER_ID)
       ?.removeEventListener("fullscreenchange", () => {});
   };
 
@@ -97,17 +101,46 @@ const useVideoEventListeners = () => {
     videoRef.current.removeEventListener("loadeddata", () => {});
   };
 
+  const addMouseMoveEventListeners = () => {
+    const container = document.getElementById(VIDEO_CONTAINER_ID);
+
+    if (!container) return;
+
+    const WAIT_TIME_BEFORE_HIDING_OVERLAY = 2000;
+
+    container.addEventListener("mousemove", () => {
+      if (mouseMoveTimeoutRef.current)
+        clearTimeout(mouseMoveTimeoutRef.current);
+
+      setShowOverlay(true);
+
+      mouseMoveTimeoutRef.current = setTimeout(() => {
+        setShowOverlay(false);
+      }, WAIT_TIME_BEFORE_HIDING_OVERLAY);
+    });
+  };
+
+  const removeMouseMoveEventListeners = () => {
+    const container = document.getElementById(VIDEO_CONTAINER_ID);
+
+    if (!container) return;
+
+    container.removeEventListener("mousemove", () => {});
+  };
+
   useEffect(() => {
     addFullScreenEventListener();
     addVideoEndedEventListener();
     addDurationChangeEventListener();
     addLoadEventListener();
+    addMouseMoveEventListeners();
 
     return () => {
       removeFullScreenEventListener();
       removeVideoEndedEventListener();
       removeDurationChangeEventListener();
       removeLoadEventListener();
+      removeMouseMoveEventListeners();
     };
   }, []);
 

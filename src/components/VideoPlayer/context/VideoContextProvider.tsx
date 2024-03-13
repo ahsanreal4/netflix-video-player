@@ -21,6 +21,7 @@ export const VideoContextProvider = ({
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoPlayerProps, setVideoPlayerProps] =
     useState<IVideoPlayerDefaultProps>(VideoPlayerDefaultProps);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   const initializeVideoProps = (props: VideoPlayerProps) => {
     if (props.isLive) setIsLiveVideo(true);
@@ -42,6 +43,8 @@ export const VideoContextProvider = ({
         setIsLiveVideo,
         videoLoaded,
         setVideoLoaded,
+        showOverlay,
+        setShowOverlay,
       }}
     >
       {children}

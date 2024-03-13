@@ -14,7 +14,6 @@ const streamLink =
   "https://stream.polygame.io/live/65f1602ab123044b4653f3ee.m3u8";
 
 export const VideoInfo = {
-  waitingImage:
-    "https://1308820136.vod2.myqcloud.com/59d72920vodtranssgp1308820136/bfbdda88388912589026878726/coverBySnapshot/coverBySnapshot_10_0.jpg",
+  waitingImage: "",
   link: twentySecondsMp4,
 };

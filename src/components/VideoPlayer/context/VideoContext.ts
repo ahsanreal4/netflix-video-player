@@ -12,6 +12,7 @@ interface VideoContextState {
   videoRef: RefObject<HTMLVideoElement>;
   isLiveVideo: boolean;
   videoLoaded: boolean;
+  showOverlay: boolean;
 
   setFullscreen: React.Dispatch<React.SetStateAction<boolean>>;
   setPaused: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +21,7 @@ interface VideoContextState {
   >;
   setIsLiveVideo: React.Dispatch<React.SetStateAction<boolean>>;
   setVideoLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowOverlay: React.Dispatch<React.SetStateAction<boolean>>;
   initializeVideoProps: (props: VideoPlayerProps) => void;
 }
 
@@ -30,12 +32,14 @@ const INITIAL_STATE: VideoContextState = {
   videoPlayerProps: VideoPlayerDefaultProps,
   videoRef: { current: null },
   videoLoaded: false,
+  showOverlay: false,
 
   setFullscreen: () => {},
   setPaused: () => {},
   setVideoPlayerProps: () => {},
   setIsLiveVideo: () => {},
   setVideoLoaded: () => {},
+  setShowOverlay: () => {},
   initializeVideoProps: () => {},
 };
 
