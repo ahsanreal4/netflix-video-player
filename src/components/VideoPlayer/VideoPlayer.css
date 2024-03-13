@@ -1,7 +1,7 @@
 .icon {
   height: 40px;
   width: 40px;
-  transition: height 0.4s;
+  transition: width 0.5s;
 }
 
 .icon:hover {

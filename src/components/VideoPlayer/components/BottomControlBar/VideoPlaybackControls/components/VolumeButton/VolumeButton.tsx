@@ -71,13 +71,17 @@ const VolumeButton = ({ color = "red" }) => {
           }, 1500);
         }}
       >
-        {volume == Volume.Mute ? <VolumeMute className={"icon"} /> : null}
-        {volume >= Volume.MidPoint ? <VolumeFull className={"icon"} /> : null}
+        {volume == Volume.Mute ? (
+          <VolumeMute className={`icon ${classes.icon}`} />
+        ) : null}
+        {volume >= Volume.MidPoint ? (
+          <VolumeFull className={`icon ${classes.icon}`} />
+        ) : null}
         {volume != Volume.Mute && volume <= Volume.LowPoint ? (
-          <VolumeLow className={"icon"} />
+          <VolumeLow className={`icon ${classes.icon}`} />
         ) : null}
         {volume > Volume.LowPoint && volume < Volume.MidPoint ? (
-          <VolumeMid className={"icon"} />
+          <VolumeMid className={`icon ${classes.icon}`} />
         ) : null}
       </div>
       {displayVolumeSlider ? (

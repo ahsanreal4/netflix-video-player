@@ -17,6 +17,14 @@ const useVideoEventListeners = () => {
     setShowOverlay,
   } = useVideoContext();
 
+  const showCursor = () => {
+    document.documentElement.style.cursor = "auto";
+  };
+
+  const hideCursor = () => {
+    document.documentElement.style.cursor = "none";
+  };
+
   const addFullScreenEventListener = () => {
     document
       .getElementById(VIDEO_CONTAINER_ID)
@@ -109,6 +117,7 @@ const useVideoEventListeners = () => {
     const WAIT_TIME_BEFORE_HIDING_OVERLAY = 2000;
 
     container.addEventListener("mousemove", () => {
+      showCursor();
       if (mouseMoveTimeoutRef.current)
         clearTimeout(mouseMoveTimeoutRef.current);
 
@@ -116,6 +125,7 @@ const useVideoEventListeners = () => {
 
       mouseMoveTimeoutRef.current = setTimeout(() => {
         setShowOverlay(false);
+        hideCursor();
       }, WAIT_TIME_BEFORE_HIDING_OVERLAY);
     });
   };
