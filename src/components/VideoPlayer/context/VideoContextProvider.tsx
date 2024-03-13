@@ -23,6 +23,7 @@ export const VideoContextProvider = ({
     useState<IVideoPlayerDefaultProps>(VideoPlayerDefaultProps);
 
   const initializeVideoProps = (props: VideoPlayerProps) => {
+    if (props.isLive) setIsLiveVideo(true);
     setVideoPlayerProps({ ...VideoPlayerDefaultProps, ...props });
   };
 
