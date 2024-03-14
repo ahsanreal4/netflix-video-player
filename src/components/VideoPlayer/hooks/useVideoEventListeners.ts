@@ -125,7 +125,12 @@ const useVideoEventListeners = () => {
 
       mouseMoveTimeoutRef.current = setTimeout(() => {
         setShowOverlay(false);
-        hideCursor();
+
+        const CURSOR_WAIT_TIME = 1000;
+
+        setTimeout(() => {
+          hideCursor();
+        }, CURSOR_WAIT_TIME);
       }, WAIT_TIME_BEFORE_HIDING_OVERLAY);
     });
   };

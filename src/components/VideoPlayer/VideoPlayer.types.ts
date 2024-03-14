@@ -5,6 +5,7 @@ export interface Controls {
   disableForwardRewindButtons?: boolean;
   disableVolumeButton?: boolean;
   disableFullScreenButton?: boolean;
+  disableBackArrow?: boolean;
 }
 
 export interface VideoPlayerProps {
@@ -17,6 +18,7 @@ export interface VideoPlayerProps {
   controls?: Controls;
   loopVideo?: boolean;
   isLive?: boolean;
+  navigation?: any;
 }
 
 export interface IVideoPlayerDefaultProps {
@@ -29,6 +31,7 @@ export interface IVideoPlayerDefaultProps {
   controls: Controls;
   loopVideo: boolean;
   isLive: boolean;
+  navigation: any;
 }
 
 export const VideoDefaultControls: Controls = {
@@ -36,6 +39,7 @@ export const VideoDefaultControls: Controls = {
   disableFullScreenButton: false,
   disablePlayPauseButton: false,
   disableVolumeButton: false,
+  disableBackArrow: true,
 };
 
 export const VideoPlayerDefaultProps: IVideoPlayerDefaultProps = {
@@ -48,6 +52,7 @@ export const VideoPlayerDefaultProps: IVideoPlayerDefaultProps = {
   thumbnail: "",
   loopVideo: false,
   isLive: false,
+  navigation: null,
 };
 
 export enum VideoFormats {

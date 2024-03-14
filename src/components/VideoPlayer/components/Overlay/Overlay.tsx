@@ -2,16 +2,22 @@ import { memo } from "react";
 import classes from "./Overlay.module.css";
 import BottomControlBar from "../BottomControlBar/BottomControlBar";
 import { useVideoContext } from "../../context/VideoContextProvider";
+import TopControlBar from "../TopControlBar/TopControlBar.Controller";
 
 const Overlay = () => {
   const { videoPlayerProps, videoLoaded, showOverlay } = useVideoContext();
+  const { disableControls, controls } = videoPlayerProps;
+  const { disableBackArrow } = controls;
 
   return (
     <>
       {showOverlay ? (
         <div className={classes.overlay_container}>
-          {videoLoaded == false || videoPlayerProps.disableControls ? null : (
-            <BottomControlBar />
+          {videoLoaded == false || disableControls ? null : (
+            <>
+              {disableBackArrow ? null : <TopControlBar />}
+              <BottomControlBar />
+            </>
           )}
         </div>
       ) : null}

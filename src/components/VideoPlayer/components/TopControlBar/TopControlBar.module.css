@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  position: absolute;
+  top: 30px;
+}
+
+.icon_container {
+  margin-left: 20px;
+}
+
+.icon_container > svg {
+  fill: white;
+  width: 52px;
+  height: 52px;
+}
+
+.icon_container > svg:hover {
+  cursor: pointer;
+}
