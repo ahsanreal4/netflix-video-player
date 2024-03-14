@@ -25,29 +25,19 @@ const useVideoControlEvents = () => {
 
     if (!animationImage || !animationContainer) return;
 
-    const ANIMATION_DURATION = 350;
+    const ANIMATION_DURATION = 500;
 
     animationImage.animate(
       [
         {
-          width: "60px",
-          height: "60px",
+          // width: "60px",
+          // height: "60px",
           opacity: "1",
           display: "block",
         },
         {
-          width: "70px",
-          height: "70px",
-          opacity: "0.75",
-        },
-        {
-          width: "75px",
-          height: "75px",
-          opacity: "0.75",
-        },
-        {
-          width: "80px",
-          height: "80px",
+          // width: "80px",
+          // height: "80px",
           opacity: "0",
           display: "none",
         },
@@ -57,29 +47,29 @@ const useVideoControlEvents = () => {
       }
     );
 
-    animationContainer.animate(
-      [
-        {
-          top: "calc(50% - 110px)",
-          left: "calc(50% - 55px)",
-        },
-        {
-          top: "calc(50% - 115px)",
-          left: "calc(50% - 65px)",
-        },
-        {
-          top: "calc(50% - 115px)",
-          left: "calc(50% - 70px)",
-        },
-        {
-          top: "calc(50% - 115px)",
-          left: "calc(50% - 75px)",
-        },
-      ],
-      {
-        duration: ANIMATION_DURATION,
-      }
-    );
+    // animationContainer.animate(
+    //   [
+    //     {
+    //       top: "calc(50% - 60px)",
+    //       left: "calc(50% - 60px)",
+    //     },
+    //     {
+    //       top: "calc(50% - 70px)",
+    //       left: "calc(50% - 70px)",
+    //     },
+    //     {
+    //       top: "calc(50% - 75px)",
+    //       left: "calc(50% - 75px)",
+    //     },
+    //     {
+    //       top: "calc(50% - 80px)",
+    //       left: "calc(50% - 80px)",
+    //     },
+    //   ],
+    //   {
+    //     duration: ANIMATION_DURATION,
+    //   }
+    // );
   };
 
   const playVideo = () => {
