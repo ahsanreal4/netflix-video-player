@@ -109,30 +109,31 @@ const useVideoEventListeners = () => {
     videoRef.current.removeEventListener("loadeddata", () => {});
   };
 
+  const onMouseMove = () => {
+    const WAIT_TIME_BEFORE_HIDING_OVERLAY = 2000;
+
+    showCursor();
+    if (mouseMoveTimeoutRef.current) clearTimeout(mouseMoveTimeoutRef.current);
+
+    setShowOverlay(true);
+
+    mouseMoveTimeoutRef.current = setTimeout(() => {
+      setShowOverlay(false);
+
+      const CURSOR_WAIT_TIME = 1000;
+
+      setTimeout(() => {
+        hideCursor();
+      }, CURSOR_WAIT_TIME);
+    }, WAIT_TIME_BEFORE_HIDING_OVERLAY);
+  };
+
   const addMouseMoveEventListeners = () => {
     const container = document.getElementById(VIDEO_CONTAINER_ID);
 
     if (!container) return;
 
-    const WAIT_TIME_BEFORE_HIDING_OVERLAY = 2000;
-
-    container.addEventListener("mousemove", () => {
-      showCursor();
-      if (mouseMoveTimeoutRef.current)
-        clearTimeout(mouseMoveTimeoutRef.current);
-
-      setShowOverlay(true);
-
-      mouseMoveTimeoutRef.current = setTimeout(() => {
-        setShowOverlay(false);
-
-        const CURSOR_WAIT_TIME = 1000;
-
-        setTimeout(() => {
-          hideCursor();
-        }, CURSOR_WAIT_TIME);
-      }, WAIT_TIME_BEFORE_HIDING_OVERLAY);
-    });
+    container.addEventListener("mousemove", onMouseMove);
   };
 
   const removeMouseMoveEventListeners = () => {
@@ -159,7 +160,7 @@ const useVideoEventListeners = () => {
     };
   }, []);
 
-  return {};
+  return { onMouseMove };
 };
 
 export default useVideoEventListeners;

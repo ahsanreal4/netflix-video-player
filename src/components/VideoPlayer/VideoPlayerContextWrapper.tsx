@@ -15,7 +15,8 @@ const VideoPlayer = (props: VideoPlayerProps) => {
     useVideoContext();
   const { muted, resizeMode } = videoPlayerProps;
 
-  const { playVideo } = useVideoControlEvents();
+  const { playVideo, handleOverlayClick, handleVideoClick } =
+    useVideoControlEvents();
   useLoadVideoSource(playVideo);
 
   useEffect(() => {
@@ -33,16 +34,18 @@ const VideoPlayer = (props: VideoPlayerProps) => {
         muted={muted}
         style={{ objectFit: resizeMode }}
         preload="auto"
-        // onCanPlay={() => {
-        //   console.log("yes");
-        // }}
+        onClick={handleVideoClick}
       />
     ),
     [muted, resizeMode]
   );
 
   return (
-    <div id="video-main_container_999" className={classes.video_container}>
+    <div
+      id="video-main_container_999"
+      className={classes.video_container}
+      onClick={handleOverlayClick}
+    >
       <Overlay />
 
       {Video}

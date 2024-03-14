@@ -10,8 +10,9 @@ const useVideoControlEvents = () => {
     setFullscreen,
     videoRef,
     isLiveVideo,
+    setShowOverlay,
   } = useVideoContext();
-  useVideoEventListeners();
+  const { onMouseMove } = useVideoEventListeners();
 
   const playVideo = () => {
     if (!videoRef.current) return;
@@ -103,6 +104,29 @@ const useVideoControlEvents = () => {
     }
   };
 
+  const handleOverlayClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    const element: HTMLDivElement = event.target as HTMLDivElement;
+
+    if (!element) return;
+
+    const dataAttr = element.attributes.getNamedItem("data-attr");
+
+    // Overlay is clicked if dataAttr is not null
+    if (!dataAttr) return;
+
+    togglePlayPause();
+  };
+
+  const handleVideoClick = (
+    event: React.MouseEvent<HTMLVideoElement, MouseEvent>
+  ) => {
+    togglePlayPause();
+    setShowOverlay(true);
+    onMouseMove();
+  };
+
   return {
     togglePlayPause,
     playVideo,
@@ -114,6 +138,8 @@ const useVideoControlEvents = () => {
     unmute,
     paused,
     toggleFullScreen,
+    handleOverlayClick,
+    handleVideoClick,
   };
 };
 
