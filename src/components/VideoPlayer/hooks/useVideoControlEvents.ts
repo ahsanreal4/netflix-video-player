@@ -14,6 +14,74 @@ const useVideoControlEvents = () => {
   } = useVideoContext();
   const { onMouseMove } = useVideoEventListeners();
 
+  const startAnimation = () => {
+    const animationImage = document.getElementById(
+      "play_pause_animation_image"
+    );
+
+    const animationContainer = document.getElementById(
+      "play_pause_animation_container"
+    );
+
+    if (!animationImage || !animationContainer) return;
+
+    const ANIMATION_DURATION = 350;
+
+    animationImage.animate(
+      [
+        {
+          width: "60px",
+          height: "60px",
+          opacity: "1",
+          display: "block",
+        },
+        {
+          width: "70px",
+          height: "70px",
+          opacity: "0.75",
+        },
+        {
+          width: "75px",
+          height: "75px",
+          opacity: "0.75",
+        },
+        {
+          width: "80px",
+          height: "80px",
+          opacity: "0",
+          display: "none",
+        },
+      ],
+      {
+        duration: ANIMATION_DURATION,
+      }
+    );
+
+    animationContainer.animate(
+      [
+        {
+          top: "calc(50% - 110px)",
+          left: "calc(50% - 55px)",
+        },
+        {
+          top: "calc(50% - 115px)",
+          left: "calc(50% - 65px)",
+        },
+        {
+          top: "calc(50% - 115px)",
+          left: "calc(50% - 70px)",
+        },
+        {
+          top: "calc(50% - 115px)",
+          left: "calc(50% - 75px)",
+        },
+      ],
+      {
+        duration: ANIMATION_DURATION,
+      }
+    );
+  };
+
   const playVideo = () => {
     if (!videoRef.current) return;
 
@@ -24,6 +92,7 @@ const useVideoControlEvents = () => {
     }
     videoRef.current.play();
     setPaused(false);
+    startAnimation();
   };
 
   const pauseVideo = () => {
@@ -31,6 +100,7 @@ const useVideoControlEvents = () => {
 
     videoRef.current.pause();
     setPaused(true);
+    startAnimation();
   };
 
   const togglePlayPause = () => {

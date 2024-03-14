@@ -38,3 +38,55 @@
     transform: rotate(1turn);
   }
 }
+
+.play_pause_animation_container {
+  position: absolute;
+  top: calc(50% - 100px);
+  left: calc(50% - 50px);
+  display: flex;
+}
+
+.play_pause_animation_container > img {
+  width: 60px;
+  height: 60px;
+
+  background-color: black;
+  padding: 20px 20px 20px 25px;
+  border-radius: 50%;
+  display: none;
+}
+
+/* @keyframes zoom {
+  0% {
+    width: 70px;
+    height: 70px;
+    visibility: visible;
+  }
+
+  25% {
+    width: 80px;
+    height: 80px;
+  }
+
+  50% {
+    width: 90px;
+    height: 90px;
+    opacity: 0.75;
+  }
+
+  75% {
+    width: 100px;
+    height: 100px;
+  }
+
+  90% {
+    opacity: 0.25;
+  }
+
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    visibility: hidden;
+  }
+} */
