@@ -19,6 +19,7 @@ export interface VideoPlayerProps {
   loopVideo?: boolean;
   isLive?: boolean;
   navigation?: any;
+  displayControlsOnFirstRender?: boolean;
 }
 
 export interface IVideoPlayerDefaultProps {
@@ -32,6 +33,7 @@ export interface IVideoPlayerDefaultProps {
   loopVideo: boolean;
   isLive: boolean;
   navigation: any;
+  displayControlsOnFirstRender: boolean;
 }
 
 export const VideoDefaultControls: Controls = {
@@ -53,6 +55,7 @@ export const VideoPlayerDefaultProps: IVideoPlayerDefaultProps = {
   loopVideo: false,
   isLive: false,
   navigation: null,
+  displayControlsOnFirstRender: false,
 };
 
 export enum VideoFormats {

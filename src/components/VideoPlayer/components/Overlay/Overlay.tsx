@@ -13,6 +13,8 @@ const Overlay = () => {
     <>
       {showOverlay ? (
         <div data-attr="toggle" className={classes.overlay_container}>
+          <div className={classes.overlay_top_container}></div>
+          <div className={classes.overlay_bottom_container}></div>
           {videoLoaded == false || disableControls ? null : (
             <>
               {disableBackArrow ? null : <TopControlBar />}

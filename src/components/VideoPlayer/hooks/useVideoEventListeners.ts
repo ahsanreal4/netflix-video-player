@@ -15,7 +15,9 @@ const useVideoEventListeners = () => {
     setIsLiveVideo,
     setPaused,
     setShowOverlay,
+    videoPlayerProps,
   } = useVideoContext();
+  const { displayControlsOnFirstRender } = videoPlayerProps;
 
   const showCursor = () => {
     document.documentElement.style.cursor = "auto";
@@ -130,6 +132,8 @@ const useVideoEventListeners = () => {
 
   const addMouseMoveEventListeners = () => {
     const container = document.getElementById(VIDEO_CONTAINER_ID);
+
+    if (displayControlsOnFirstRender) onMouseMove();
 
     if (!container) return;
 
