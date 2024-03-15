@@ -4,10 +4,16 @@ import BottomControlBar from "../BottomControlBar/BottomControlBar";
 import { useVideoContext } from "../../context/VideoContextProvider";
 import TopControlBar from "../TopControlBar/TopControlBar.Controller";
 import { Images } from "../../VideoPlayer.assets";
+import CrossOutlined from "../../assets/cross-outlined";
 
 const Overlay = () => {
-  const { videoPlayerProps, videoLoaded, showOverlay, paused } =
-    useVideoContext();
+  const {
+    videoPlayerProps,
+    videoLoaded,
+    showOverlay,
+    paused,
+    unableToPlayVideo,
+  } = useVideoContext();
   const { disableControls, controls } = videoPlayerProps;
   const { disableBackArrow } = controls;
 
@@ -43,6 +49,12 @@ const Overlay = () => {
           <div className={classes.loading_spinner}></div>
         </div>
       )}
+      {unableToPlayVideo ? (
+        <div className={classes.unable_to_load_container}>
+          <CrossOutlined />
+          <p>Video unavailable</p>
+        </div>
+      ) : null}
     </>
   );
 };

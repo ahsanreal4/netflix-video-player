@@ -4,7 +4,13 @@ import Hls from "hls.js";
 import { useVideoContext } from "../context/VideoContextProvider";
 
 const useLoadVideoSource = (playVideo: () => void) => {
-  const { videoPlayerProps, videoRef } = useVideoContext();
+  const {
+    videoPlayerProps,
+    videoRef,
+    setVideoLoaded,
+    setVideoPlayerProps,
+    setUnableToPlayVideo,
+  } = useVideoContext();
   const { src, autoPlay } = videoPlayerProps;
 
   const isSimpleVideoFormat = (format: string) => {
@@ -27,8 +33,37 @@ const useLoadVideoSource = (playVideo: () => void) => {
     if (autoPlay) playVideo();
   };
 
-  const loadVideoSource = () => {
+  const checkIsSourceValid = async () => {
+    const MINIMUM_SOURCE_LENGTH = 5;
+
+    if (typeof src != "string" || src.length < MINIMUM_SOURCE_LENGTH)
+      return false;
+
+    let result = false;
+    const RESPONSE_VALID_STATUS = 200;
+
+    try {
+      const response = await fetch(src, { method: "GET" });
+
+      if (response.status == RESPONSE_VALID_STATUS) result = true;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      return result;
+    }
+  };
+
+  const loadVideoSource = async () => {
     if (!videoRef.current) return;
+
+    const isSourceValid = await checkIsSourceValid();
+
+    if (!isSourceValid) {
+      setVideoLoaded(true);
+      setVideoPlayerProps({ ...videoPlayerProps, disableControls: true });
+      setUnableToPlayVideo(true);
+      return;
+    }
 
     const format = getVideoFormat(src);
 

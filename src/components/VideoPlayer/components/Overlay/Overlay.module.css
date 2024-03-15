@@ -17,8 +17,12 @@
 
 .loading_spinner_container {
   position: absolute;
-  top: calc(50% - 80px);
-  left: calc(50% - 70px);
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  bottom: 50px;
 }
 
 /* HTML: <div class="loader"></div> */
@@ -42,8 +46,9 @@
 .play_pause_animation_container {
   position: absolute;
   top: calc(50% - 100px);
-  left: calc(50% - 50px);
   display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .play_pause_animation_container > img {
@@ -56,37 +61,24 @@
   display: none;
 }
 
-/* @keyframes zoom {
-  0% {
-    width: 70px;
-    height: 70px;
-    visibility: visible;
-  }
+.unable_to_load_container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  bottom: 50px;
+}
 
-  25% {
-    width: 80px;
-    height: 80px;
-  }
+.unable_to_load_container > svg {
+  width: 120px;
+  height: 120px;
+  fill: white !important;
+}
 
-  50% {
-    width: 90px;
-    height: 90px;
-    opacity: 0.75;
-  }
-
-  75% {
-    width: 100px;
-    height: 100px;
-  }
-
-  90% {
-    opacity: 0.25;
-  }
-
-  100% {
-    width: 100px;
-    height: 100px;
-    opacity: 0;
-    visibility: hidden;
-  }
-} */
+.unable_to_load_container > p {
+  color: red;
+  font-size: 20px;
+}

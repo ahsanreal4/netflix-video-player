@@ -120,7 +120,7 @@ const useVideoEventListeners = () => {
     setShowOverlay(true);
 
     mouseMoveTimeoutRef.current = setTimeout(() => {
-      // setShowOverlay(false);
+      setShowOverlay(false);
 
       const CURSOR_WAIT_TIME = 1000;
 

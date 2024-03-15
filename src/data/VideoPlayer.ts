@@ -11,9 +11,9 @@ const InvalidLink =
   "https://stream.polygame.io/live/65f0bae4b123044b46478a17.m3u8";
 
 const streamLink =
-  "https://stream.polygame.io/live/65f1602ab123044b4653f3ee.m3u8";
+  "https://stream.polygame.io/live/65f3df6ea017c85ee9f796c3.m3u8";
 
 export const VideoInfo = {
   waitingImage: "",
-  link: twentySecondsMp4,
+  link: streamLink,
 };

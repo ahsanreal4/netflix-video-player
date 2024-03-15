@@ -11,7 +11,11 @@ const useVideoControlEvents = () => {
     videoRef,
     isLiveVideo,
     setShowOverlay,
+    videoLoaded,
+    videoPlayerProps,
   } = useVideoContext();
+
+  const { disableControls } = videoPlayerProps;
   const { onMouseMove } = useVideoEventListeners();
 
   const startAnimation = () => {
@@ -73,7 +77,7 @@ const useVideoControlEvents = () => {
   };
 
   const playVideo = () => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || !videoLoaded) return;
 
     // If video live update stream to latest point
     if (isLiveVideo) {
@@ -86,7 +90,7 @@ const useVideoControlEvents = () => {
   };
 
   const pauseVideo = () => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || !videoLoaded) return;
 
     videoRef.current.pause();
     setPaused(true);
@@ -167,6 +171,8 @@ const useVideoControlEvents = () => {
   const handleOverlayClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
+    if (disableControls) return;
+
     const element: HTMLDivElement = event.target as HTMLDivElement;
 
     if (!element) return;
@@ -182,6 +188,8 @@ const useVideoControlEvents = () => {
   const handleVideoClick = (
     event: React.MouseEvent<HTMLVideoElement, MouseEvent>
   ) => {
+    if (disableControls) return;
+
     togglePlayPause();
     setShowOverlay(true);
     onMouseMove();
