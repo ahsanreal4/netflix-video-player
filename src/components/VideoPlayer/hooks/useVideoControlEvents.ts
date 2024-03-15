@@ -10,28 +10,19 @@ const useVideoControlEvents = () => {
     setFullscreen,
     videoRef,
     isLiveVideo,
-    setShowOverlay,
-    videoLoaded,
     videoPlayerProps,
+    containerRef,
+    videoLoaded,
   } = useVideoContext();
 
   const { disableControls } = videoPlayerProps;
-  const { onMouseMove } = useVideoEventListeners();
 
-  const startAnimation = () => {
-    const animationImage = document.getElementById(
-      "play_pause_animation_image"
-    );
+  const { clearMouseMoveTimeouts } = useVideoEventListeners(togglePlayPause);
 
-    const animationContainer = document.getElementById(
-      "play_pause_animation_container"
-    );
-
-    if (!animationImage || !animationContainer) return;
-
+  const animate = (element: HTMLElement) => {
     const ANIMATION_DURATION = 500;
 
-    animationImage.animate(
+    element.animate(
       [
         {
           // width: "60px",
@@ -50,34 +41,28 @@ const useVideoControlEvents = () => {
         duration: ANIMATION_DURATION,
       }
     );
+  };
 
-    // animationContainer.animate(
-    //   [
-    //     {
-    //       top: "calc(50% - 60px)",
-    //       left: "calc(50% - 60px)",
-    //     },
-    //     {
-    //       top: "calc(50% - 70px)",
-    //       left: "calc(50% - 70px)",
-    //     },
-    //     {
-    //       top: "calc(50% - 75px)",
-    //       left: "calc(50% - 75px)",
-    //     },
-    //     {
-    //       top: "calc(50% - 80px)",
-    //       left: "calc(50% - 80px)",
-    //     },
-    //   ],
-    //   {
-    //     duration: ANIMATION_DURATION,
-    //   }
-    // );
+  const startAnimation = () => {
+    const animationImage = document.getElementById(
+      "play_pause_animation_image"
+    );
+
+    // If user clicks on video container so we need to start it when overlay shows
+    if (!animationImage) {
+      setTimeout(() => {
+        const image = document.getElementById("play_pause_animation_image");
+        if (image) animate(image);
+      }, 0);
+
+      return;
+    }
+
+    animate(animationImage);
   };
 
   const playVideo = () => {
-    if (!videoRef.current || !videoLoaded) return;
+    if (!videoRef.current) return;
 
     // If video live update stream to latest point
     if (isLiveVideo) {
@@ -90,22 +75,22 @@ const useVideoControlEvents = () => {
   };
 
   const pauseVideo = () => {
-    if (!videoRef.current || !videoLoaded) return;
+    if (!videoRef.current) return;
 
     videoRef.current.pause();
     setPaused(true);
     startAnimation();
   };
 
-  const togglePlayPause = () => {
+  function togglePlayPause() {
     if (!videoRef.current) return;
 
-    if (videoRef.current?.paused) {
+    if (videoRef.current.paused) {
       playVideo();
     } else {
       pauseVideo();
     }
-  };
+  }
 
   const forwardVideo = (time: number = 10) => {
     if (!videoRef.current) return;
@@ -153,9 +138,9 @@ const useVideoControlEvents = () => {
   };
 
   const enterFullScreen = () => {
-    if (!videoRef.current) return;
+    if (!containerRef.current) return;
 
-    document.getElementById("video-main_container_999")?.requestFullscreen();
+    containerRef.current.requestFullscreen();
 
     setFullscreen(true);
   };
@@ -168,12 +153,12 @@ const useVideoControlEvents = () => {
     }
   };
 
-  const handleOverlayClick = (
+  const onOverlayClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    if (disableControls) return;
+    if (disableControls || videoLoaded == false) return;
 
-    const element: HTMLDivElement = event.target as HTMLDivElement;
+    const element: HTMLDivElement = event?.target as HTMLDivElement;
 
     if (!element) return;
 
@@ -182,17 +167,8 @@ const useVideoControlEvents = () => {
     // Overlay is clicked if dataAttr is not null
     if (!dataAttr) return;
 
+    clearMouseMoveTimeouts();
     togglePlayPause();
-  };
-
-  const handleVideoClick = (
-    event: React.MouseEvent<HTMLVideoElement, MouseEvent>
-  ) => {
-    if (disableControls) return;
-
-    togglePlayPause();
-    setShowOverlay(true);
-    onMouseMove();
   };
 
   return {
@@ -206,8 +182,7 @@ const useVideoControlEvents = () => {
     unmute,
     paused,
     toggleFullScreen,
-    handleOverlayClick,
-    handleVideoClick,
+    onOverlayClick,
   };
 };
 

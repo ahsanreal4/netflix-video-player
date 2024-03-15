@@ -10,6 +10,7 @@ interface VideoContextState {
   fullscreen: boolean;
   videoPlayerProps: IVideoPlayerDefaultProps;
   videoRef: RefObject<HTMLVideoElement>;
+  containerRef: RefObject<HTMLDivElement>;
   isLiveVideo: boolean;
   videoLoaded: boolean;
   showOverlay: boolean;
@@ -33,6 +34,7 @@ const INITIAL_STATE: VideoContextState = {
   isLiveVideo: false,
   videoPlayerProps: VideoPlayerDefaultProps,
   videoRef: { current: null },
+  containerRef: { current: null },
   videoLoaded: false,
   showOverlay: false,
   unableToPlayVideo: false,

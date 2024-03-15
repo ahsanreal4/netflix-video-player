@@ -27,10 +27,12 @@ const Overlay = () => {
             className={classes.overlay_bottom_container}
           />
           <div
+            data-attr="toggle"
             id="play_pause_animation_container"
             className={classes.play_pause_animation_container}
           >
             <img
+              data-attr="toggle"
               id="play_pause_animation_image"
               // @ts-expect-error
               src={paused ? Images.Pause : Images.Play}

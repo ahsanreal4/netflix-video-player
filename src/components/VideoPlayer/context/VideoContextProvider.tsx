@@ -14,6 +14,7 @@ export const VideoContextProvider = ({
   children,
 }: VideoContextProviderProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const [fullscreen, setFullscreen] = useState(false);
   const [paused, setPaused] = useState(true);
@@ -40,6 +41,7 @@ export const VideoContextProvider = ({
         setVideoPlayerProps,
         initializeVideoProps,
         videoRef,
+        containerRef,
         isLiveVideo,
         setIsLiveVideo,
         videoLoaded,

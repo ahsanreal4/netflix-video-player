@@ -11,12 +11,11 @@ import "./VideoPlayer.css";
 import { useVideoContext } from "./context/VideoContextProvider";
 
 const VideoPlayer = (props: VideoPlayerProps) => {
-  const { initializeVideoProps, videoRef, videoPlayerProps } =
+  const { initializeVideoProps, videoRef, videoPlayerProps, containerRef } =
     useVideoContext();
   const { muted, resizeMode } = videoPlayerProps;
 
-  const { playVideo, handleOverlayClick, handleVideoClick } =
-    useVideoControlEvents();
+  const { playVideo, onOverlayClick } = useVideoControlEvents();
   useLoadVideoSource(playVideo);
 
   useEffect(() => {
@@ -34,7 +33,6 @@ const VideoPlayer = (props: VideoPlayerProps) => {
         muted={muted}
         style={{ objectFit: resizeMode }}
         preload="auto"
-        onClick={handleVideoClick}
       />
     ),
     [muted, resizeMode]
@@ -42,9 +40,9 @@ const VideoPlayer = (props: VideoPlayerProps) => {
 
   return (
     <div
-      id="video-main_container_999"
       className={classes.video_container}
-      onClick={handleOverlayClick}
+      ref={containerRef}
+      onClick={onOverlayClick}
     >
       <Overlay />
 

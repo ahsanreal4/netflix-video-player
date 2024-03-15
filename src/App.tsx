@@ -9,6 +9,7 @@ function App() {
         thumbnail={VideoInfo.waitingImage}
         src={VideoInfo.link}
         resizeMode="cover"
+        muted={true}
       />
     </div>
   );
