@@ -1,3 +1,4 @@
+import { isMobile } from "react-device-detect";
 import { Volume } from "../VideoPlayer.types";
 import { useVideoContext } from "../context/VideoContextProvider";
 import useVideoEventListeners from "./useVideoEventListeners";
@@ -71,7 +72,8 @@ const useVideoControlEvents = () => {
     }
     videoRef.current.play();
     setPaused(false);
-    startAnimation();
+
+    if (!isMobile) startAnimation();
   };
 
   const pauseVideo = () => {
@@ -79,7 +81,7 @@ const useVideoControlEvents = () => {
 
     videoRef.current.pause();
     setPaused(true);
-    startAnimation();
+    if (!isMobile) startAnimation();
   };
 
   function togglePlayPause() {

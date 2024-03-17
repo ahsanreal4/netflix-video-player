@@ -11,6 +11,7 @@ import VolumeMid from "../../../../../assets/volume-mid";
 import "rc-slider/assets/index.css";
 import { useVideoContext } from "../../../../../context/VideoContextProvider";
 import useVideoControlEvents from "../../../../../hooks/useVideoControlEvents";
+import { isMobile } from "react-device-detect";
 
 const VolumeButton = ({ color = "red" }) => {
   const isMouseOnVolumeIconRef = useRef<boolean>(false);
@@ -35,7 +36,7 @@ const VolumeButton = ({ color = "red" }) => {
   };
 
   const showSlider = () => {
-    if (!isMouseOnVolumeIconRef.current) return;
+    if (!isMouseOnVolumeIconRef.current || isMobile) return;
 
     setDisplayVolumeSlider(true);
   };
@@ -43,7 +44,8 @@ const VolumeButton = ({ color = "red" }) => {
   const hideSlider = () => {
     if (
       isMouseOnSliderRef.current == true ||
-      isMouseOnVolumeIconRef.current == true
+      isMouseOnVolumeIconRef.current == true ||
+      isMobile
     )
       return;
 
@@ -84,7 +86,7 @@ const VolumeButton = ({ color = "red" }) => {
           <VolumeMid className={`icon ${classes.icon}`} />
         ) : null}
       </div>
-      {displayVolumeSlider ? (
+      {displayVolumeSlider && isMobile == false ? (
         <div
           onMouseEnter={() => {
             isMouseOnSliderRef.current = true;

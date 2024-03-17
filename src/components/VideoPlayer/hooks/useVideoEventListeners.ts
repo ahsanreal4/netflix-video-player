@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useVideoContext } from "../context/VideoContextProvider";
+import { isMobile } from "react-device-detect";
 
 const useVideoEventListeners = (togglePlayPause: () => void) => {
   const prevDurationRef = useRef<number>(0);
@@ -132,18 +133,14 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
     videoRef.current.removeEventListener("loadeddata", onVideoLoad);
   };
 
-  const onMouseMove = useCallback(() => {
-    if (videoLoadedRef.current == false) return;
-
+  const mouseMoveTimeout = () => {
     const WAIT_TIME_BEFORE_HIDING_OVERLAY = 2000;
-
-    showCursor();
-    if (mouseMoveTimeoutRef.current) clearTimeout(mouseMoveTimeoutRef.current);
-
-    setShowOverlay(true);
 
     mouseMoveTimeoutRef.current = setTimeout(() => {
       setShowOverlay(false);
+
+      // Don't do cursor hide timeout for mobile screens
+      if (isMobile) return;
 
       const CURSOR_WAIT_TIME = 1000;
 
@@ -151,6 +148,17 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
         hideCursor();
       }, CURSOR_WAIT_TIME);
     }, WAIT_TIME_BEFORE_HIDING_OVERLAY);
+  };
+
+  const onMouseMove = useCallback(() => {
+    if (videoLoadedRef.current == false) return;
+
+    showCursor();
+    if (mouseMoveTimeoutRef.current) clearTimeout(mouseMoveTimeoutRef.current);
+
+    setShowOverlay(true);
+
+    mouseMoveTimeout();
   }, []);
 
   const addMouseMoveEventListeners = () => {
@@ -177,6 +185,11 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
   const onVideoClick = useCallback(() => {
     if (disableControls || videoLoadedRef.current == false) return;
 
+    if (isMobile) {
+      setShowOverlay(true);
+      return;
+    }
+
     clearMouseMoveTimeouts();
     togglePlayPause();
     setShowOverlay(true);
@@ -200,8 +213,12 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
     addVideoEndedEventListener();
     addDurationChangeEventListener();
     addLoadEventListener();
-    addMouseMoveEventListeners();
     addVideoClickEventListener();
+
+    if (isMobile) return;
+
+    // Desktop only event listeners
+    addMouseMoveEventListeners();
   };
 
   const removeAllEventListeners = () => {
@@ -209,8 +226,12 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
     removeVideoEndedEventListener();
     removeDurationChangeEventListener();
     removeLoadEventListener();
-    removeMouseMoveEventListeners();
     removeVideoClickEventListener();
+
+    if (isMobile) return;
+
+    // Desktop only event listeners
+    removeMouseMoveEventListeners();
   };
 
   useEffect(() => {

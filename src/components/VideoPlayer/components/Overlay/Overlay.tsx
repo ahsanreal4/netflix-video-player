@@ -5,6 +5,8 @@ import { useVideoContext } from "../../context/VideoContextProvider";
 import TopControlBar from "../TopControlBar/TopControlBar.Controller";
 import { Images } from "../../VideoPlayer.assets";
 import CrossOutlined from "../../assets/cross-outlined";
+import MobilePlaybackControls from "../MobilePlaybackControls/MobilePlaybackControls";
+import { isMobile } from "react-device-detect";
 
 const Overlay = () => {
   const {
@@ -26,22 +28,25 @@ const Overlay = () => {
             data-attr="toggle"
             className={classes.overlay_bottom_container}
           />
-          <div
-            data-attr="toggle"
-            id="play_pause_animation_container"
-            className={classes.play_pause_animation_container}
-          >
-            <img
+          {isMobile ? null : (
+            <div
               data-attr="toggle"
-              id="play_pause_animation_image"
-              // @ts-expect-error
-              src={paused ? Images.Pause : Images.Play}
-            />
-          </div>
+              id="play_pause_animation_container"
+              className={classes.play_pause_animation_container}
+            >
+              <img
+                data-attr="toggle"
+                id="play_pause_animation_image"
+                // @ts-expect-error
+                src={paused ? Images.Pause : Images.Play}
+              />
+            </div>
+          )}
           {videoLoaded == false || disableControls ? null : (
             <>
               {disableBackArrow ? null : <TopControlBar />}
               <BottomControlBar />
+              {isMobile ? <MobilePlaybackControls /> : null}
             </>
           )}
         </div>

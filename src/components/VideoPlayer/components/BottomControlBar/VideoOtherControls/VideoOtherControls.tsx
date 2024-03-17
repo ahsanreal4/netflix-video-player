@@ -15,7 +15,7 @@ const VideoOtherControls = () => {
   const { toggleFullScreen } = useVideoControlEvents();
 
   return (
-    <div>
+    <div className={classes.container}>
       {controls.disableFullScreenButton ? null : (
         <div onClick={toggleFullScreen}>
           {fullscreen ? (
