@@ -7,6 +7,7 @@ import { Images } from "../../VideoPlayer.assets";
 import CrossOutlined from "../../assets/cross-outlined";
 import MobilePlaybackControls from "../MobilePlaybackControls/MobilePlaybackControls";
 import { isMobile } from "react-device-detect";
+import MobileLockUnlock from "../BottomControlBar/MobileLockUnlock/MobileLockUnlock";
 
 const Overlay = () => {
   const {
@@ -15,6 +16,7 @@ const Overlay = () => {
     showOverlay,
     paused,
     unableToPlayVideo,
+    lockControls,
   } = useVideoContext();
   const { disableControls, controls } = videoPlayerProps;
   const { disableBackArrow } = controls;
@@ -42,13 +44,14 @@ const Overlay = () => {
               />
             </div>
           )}
-          {videoLoaded == false || disableControls ? null : (
+          {lockControls || videoLoaded == false || disableControls ? null : (
             <>
               {disableBackArrow ? null : <TopControlBar />}
               <BottomControlBar />
               {isMobile ? <MobilePlaybackControls /> : null}
             </>
           )}
+          {lockControls ? <MobileLockUnlock /> : null}
         </div>
       ) : null}
       {videoLoaded ? null : (

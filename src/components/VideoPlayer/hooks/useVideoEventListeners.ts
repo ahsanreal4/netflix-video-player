@@ -187,6 +187,7 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
 
     if (isMobile) {
       setShowOverlay(true);
+      onMouseMove();
       return;
     }
 

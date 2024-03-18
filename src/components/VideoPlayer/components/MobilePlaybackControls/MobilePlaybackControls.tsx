@@ -5,8 +5,8 @@ import classes from "./MobilePlaybackControls.module.css";
 
 const MobilePlaybackControls = () => {
   return (
-    <div className={classes.container}>
-      <div className={classes.playbacks_container}>
+    <div className={classes.container} data-attr="toggle">
+      <div className={classes.playbacks_container} data-attr="toggle">
         <RewindButton />
         <PlayPauseButton />
         <ForwardButton />

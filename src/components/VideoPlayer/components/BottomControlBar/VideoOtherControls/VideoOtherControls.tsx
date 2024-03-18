@@ -19,9 +19,9 @@ const VideoOtherControls = () => {
       {controls.disableFullScreenButton ? null : (
         <div onClick={toggleFullScreen}>
           {fullscreen ? (
-            <ExitFullScreen className="icon" />
+            <ExitFullScreen className="icon small_icon" />
           ) : (
-            <EnterFullScreen className="icon" />
+            <EnterFullScreen className="icon small_icon" />
           )}
         </div>
       )}

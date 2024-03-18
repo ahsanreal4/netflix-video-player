@@ -11,7 +11,7 @@ const ForwardButton = () => {
         forwardVideo();
       }}
     >
-      <ForwardTime className={"icon mobile_icon"} />
+      <ForwardTime className={"icon"} />
     </div>
   );
 };

@@ -12,7 +12,7 @@ const PlayPauseButton = () => {
     <>
       {controls.disablePlayPauseButton ? null : (
         <img
-          className={"icon mobile_icon"}
+          className={"icon"}
           // @ts-expect-error
           src={paused ? Images.Play : Images.Pause}
           width={32}

@@ -14,11 +14,14 @@ const useVideoControlEvents = () => {
     videoPlayerProps,
     containerRef,
     videoLoaded,
+    setShowOverlay,
+    setLockControls,
   } = useVideoContext();
 
   const { disableControls } = videoPlayerProps;
 
-  const { clearMouseMoveTimeouts } = useVideoEventListeners(togglePlayPause);
+  const { clearMouseMoveTimeouts, onMouseMove } =
+    useVideoEventListeners(togglePlayPause);
 
   const animate = (element: HTMLElement) => {
     const ANIMATION_DURATION = 500;
@@ -167,10 +170,26 @@ const useVideoControlEvents = () => {
     const dataAttr = element.attributes.getNamedItem("data-attr");
 
     // Overlay is clicked if dataAttr is not null
-    if (!dataAttr) return;
+    if (!dataAttr) {
+      if (isMobile) {
+        clearMouseMoveTimeouts();
+        onMouseMove();
+      }
+      return;
+    }
+
+    if (isMobile) {
+      setShowOverlay(false);
+      clearMouseMoveTimeouts();
+      return;
+    }
 
     clearMouseMoveTimeouts();
     togglePlayPause();
+  };
+
+  const toggleLockUnlockControls = () => {
+    setLockControls((prev) => !prev);
   };
 
   return {
@@ -185,6 +204,7 @@ const useVideoControlEvents = () => {
     paused,
     toggleFullScreen,
     onOverlayClick,
+    toggleLockUnlockControls,
   };
 };
 

@@ -30,6 +30,5 @@ body {
 @media only screen and (max-width: 550px) {
   .video_playback_controls_container {
     height: 30px;
-    padding: 0px 5px;
   }
 }

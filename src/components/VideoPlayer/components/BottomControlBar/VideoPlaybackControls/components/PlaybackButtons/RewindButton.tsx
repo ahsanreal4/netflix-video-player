@@ -11,7 +11,7 @@ const RewindButton = () => {
         rewindVideo();
       }}
     >
-      <RewindTime className={"icon mobile_icon"} />
+      <RewindTime className={"icon"} />
     </div>
   );
 };

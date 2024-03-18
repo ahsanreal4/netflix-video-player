@@ -1,20 +1,20 @@
 .container {
   position: absolute;
+  bottom: 15px;
 
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  bottom: 50px;
-
   width: 100%;
   height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
-.playbacks_container {
+.icon_container {
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 10%;
+}
+
+.icon_container > p {
+  font-weight: bold;
 }

@@ -24,14 +24,24 @@
   width: 100%;
 }
 
-@media only screen and (max-width: 550px) {
+.mobile_container {
+  position: absolute;
+  bottom: 0;
+  padding: 0px 4vw;
+  padding-bottom: 10px;
+  width: 100%;
+  z-index: 5;
+}
+
+@media (pointer: none), (pointer: coarse) {
   .container {
+    position: absolute;
+    bottom: 0;
+    padding: 0px 4vw;
+    padding-bottom: 10px;
+    width: 100%;
+    z-index: 5;
     height: unset;
     min-height: unset;
-    bottom: 10px;
-  }
-
-  .controls_container {
-    gap: 30px;
   }
 }
