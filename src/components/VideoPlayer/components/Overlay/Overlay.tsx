@@ -51,7 +51,7 @@ const Overlay = () => {
               {isMobile ? <MobilePlaybackControls /> : null}
             </>
           )}
-          {lockControls ? <MobileLockUnlock /> : null}
+          {lockControls && disableControls ? <MobileLockUnlock /> : null}
         </div>
       ) : null}
       {videoLoaded ? null : (

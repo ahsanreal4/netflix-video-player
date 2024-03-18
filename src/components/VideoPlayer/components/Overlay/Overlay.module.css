@@ -87,4 +87,13 @@
   .loading_spinner_container {
     bottom: 15px;
   }
+
+  .unable_to_load_container {
+    bottom: 20px;
+  }
+
+  .unable_to_load_container > svg {
+    width: 80px;
+    height: 80px;
+  }
 }
