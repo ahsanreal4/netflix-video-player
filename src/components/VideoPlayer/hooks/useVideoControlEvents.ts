@@ -16,9 +16,10 @@ const useVideoControlEvents = () => {
     videoLoaded,
     setShowOverlay,
     setLockControls,
+    setVideoPlayerProps,
   } = useVideoContext();
 
-  const { disableControls } = videoPlayerProps;
+  const { disableControls, muted } = videoPlayerProps;
 
   const { clearMouseMoveTimeouts, onMouseMove } =
     useVideoEventListeners(togglePlayPause);
@@ -111,6 +112,9 @@ const useVideoControlEvents = () => {
 
   const toggleVolume = (volume: number = Volume.Full) => {
     if (!videoRef.current) return;
+    if (muted == true) {
+      setVideoPlayerProps({ ...videoPlayerProps, muted: false });
+    }
 
     videoRef.current.volume = volume;
   };
