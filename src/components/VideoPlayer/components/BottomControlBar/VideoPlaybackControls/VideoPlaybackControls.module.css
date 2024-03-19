@@ -27,6 +27,12 @@ body {
   margin: 42px auto 0;
 }
 
+.lock_icon {
+  fill: white;
+  height: 30px;
+  width: 30px;
+}
+
 @media only screen and (max-width: 550px) {
   .video_playback_controls_container {
     height: 30px;

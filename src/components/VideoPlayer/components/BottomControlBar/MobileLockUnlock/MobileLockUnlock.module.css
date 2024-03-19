@@ -15,6 +15,13 @@
   justify-content: center;
 }
 
-.icon_container > p {
-  font-weight: bold;
+.unlock_container {
+  background-color: white;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.unlock_icon {
+  height: 40px;
+  width: 40px;
 }
