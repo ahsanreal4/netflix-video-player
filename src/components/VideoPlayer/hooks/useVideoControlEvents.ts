@@ -22,7 +22,7 @@ const useVideoControlEvents = () => {
   const { disableControls, muted } = videoPlayerProps;
 
   const { clearMouseMoveTimeouts, onMouseMove, initializeEventListeners } =
-    useVideoEventListeners(togglePlayPause);
+    useVideoEventListeners(togglePlayPause, rewindVideo, forwardVideo);
 
   const animate = (element: HTMLElement) => {
     const ANIMATION_DURATION = 500;
@@ -98,17 +98,17 @@ const useVideoControlEvents = () => {
     }
   }
 
-  const forwardVideo = (time: number = 10) => {
+  function forwardVideo(time: number = 10) {
     if (!videoRef.current) return;
 
     videoRef.current.currentTime += time;
-  };
+  }
 
-  const rewindVideo = (time: number = 10) => {
+  function rewindVideo(time: number = 10) {
     if (!videoRef.current) return;
 
     videoRef.current.currentTime -= time;
-  };
+  }
 
   const toggleVolume = (volume: number = Volume.Full) => {
     if (!videoRef.current) return;

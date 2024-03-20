@@ -1,8 +1,13 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useVideoContext } from "../context/VideoContextProvider";
 import { isMobile } from "react-device-detect";
+import { KeyCodes } from "../VideoPlayer.types";
 
-const useVideoEventListeners = (togglePlayPause: () => void) => {
+const useVideoEventListeners = (
+  togglePlayPause: () => void,
+  rewindVideo: () => void,
+  forwardVideo: () => void
+) => {
   const prevDurationRef = useRef<number>(0);
   const mouseMoveTimeoutRef = useRef<NodeJS.Timeout>();
   const hideMouseTimeoutRef = useRef<NodeJS.Timeout>();
@@ -22,8 +27,12 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
     containerRef,
     videoLoading,
   } = useVideoContext();
-  const { displayControlsOnFirstRender, disableControls, loopVideo } =
-    videoPlayerProps;
+  const {
+    displayControlsOnFirstRender,
+    disableControls,
+    loopVideo,
+    disableKeyboardArrowEventListeners,
+  } = videoPlayerProps;
 
   useEffect(() => {
     videoLoadedRef.current = videoLoading;
@@ -224,6 +233,29 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
     videoRef.current.removeEventListener("click", onVideoClick);
   };
 
+  const onKeyboardPress = useCallback((event: KeyboardEvent) => {
+    if (disableControlsRef.current == true || videoLoadedRef.current == true)
+      return;
+
+    if (event.key == KeyCodes.ArrowLeft) {
+      rewindVideo();
+    } else if (event.key == KeyCodes.ArrowRight) {
+      forwardVideo();
+    }
+  }, []);
+
+  const addKeyboardEventListener = () => {
+    if (!containerRef.current) return;
+
+    document.addEventListener("keydown", onKeyboardPress);
+  };
+
+  const removeKeyboardEventListener = () => {
+    if (!containerRef.current) return;
+
+    document.removeEventListener("keydown", onKeyboardPress);
+  };
+
   const initializeEventListeners = () => {
     addFullScreenEventListener();
     addVideoEndedEventListener();
@@ -235,6 +267,7 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
 
     // Desktop only event listeners
     addMouseMoveEventListeners();
+    if (!disableKeyboardArrowEventListeners) addKeyboardEventListener();
   };
 
   const removeAllEventListeners = () => {
@@ -248,6 +281,7 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
 
     // Desktop only event listeners
     removeMouseMoveEventListeners();
+    if (!disableKeyboardArrowEventListeners) removeKeyboardEventListener();
   };
 
   useEffect(() => {

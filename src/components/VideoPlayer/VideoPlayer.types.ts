@@ -23,6 +23,7 @@ export interface VideoPlayerProps {
   isLive?: boolean;
   navigation?: any;
   displayControlsOnFirstRender?: boolean;
+  disableKeyboardArrowEventListeners?: boolean;
 }
 
 export interface IVideoPlayerDefaultProps {
@@ -37,6 +38,7 @@ export interface IVideoPlayerDefaultProps {
   isLive: boolean;
   navigation: any;
   displayControlsOnFirstRender: boolean;
+  disableKeyboardArrowEventListeners: boolean;
 }
 
 export const VideoDefaultControls: Controls = {
@@ -62,6 +64,7 @@ export const VideoPlayerDefaultProps: IVideoPlayerDefaultProps = {
   isLive: false,
   navigation: null,
   displayControlsOnFirstRender: false,
+  disableKeyboardArrowEventListeners: false,
 };
 
 export enum VideoFormats {
@@ -78,4 +81,9 @@ export enum Volume {
   LowPoint = 0.25,
   // More or equal to it volume will be considered high
   MidPoint = 0.75,
+}
+
+export enum KeyCodes {
+  ArrowLeft = "ArrowLeft",
+  ArrowRight = "ArrowRight",
 }
