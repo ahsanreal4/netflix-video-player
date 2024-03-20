@@ -1,7 +1,6 @@
 import { isMobile } from "react-device-detect";
 import { Volume } from "../VideoPlayer.types";
 import { useVideoContext } from "../context/VideoContextProvider";
-import useVideoEventListeners from "./useVideoEventListeners";
 
 const useVideoControlEvents = () => {
   const {
@@ -13,16 +12,11 @@ const useVideoControlEvents = () => {
     isLiveVideo,
     videoPlayerProps,
     containerRef,
-    videoLoading,
-    setShowOverlay,
     setLockControls,
     setVideoPlayerProps,
   } = useVideoContext();
 
-  const { disableControls, muted } = videoPlayerProps;
-
-  const { clearMouseMoveTimeouts, onMouseMove, initializeEventListeners } =
-    useVideoEventListeners(togglePlayPause, rewindVideo, forwardVideo);
+  const { muted } = videoPlayerProps;
 
   const animate = (element: HTMLElement) => {
     const ANIMATION_DURATION = 500;
@@ -162,36 +156,6 @@ const useVideoControlEvents = () => {
     }
   };
 
-  const onOverlayClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    if (disableControls || videoLoading) return;
-
-    const element: HTMLDivElement = event?.target as HTMLDivElement;
-
-    if (!element) return;
-
-    const dataAttr = element.attributes.getNamedItem("data-attr");
-
-    // Overlay is clicked if dataAttr is not null
-    if (!dataAttr) {
-      if (isMobile) {
-        clearMouseMoveTimeouts();
-        onMouseMove();
-      }
-      return;
-    }
-
-    if (isMobile) {
-      setShowOverlay(false);
-      clearMouseMoveTimeouts();
-      return;
-    }
-
-    clearMouseMoveTimeouts();
-    togglePlayPause();
-  };
-
   const toggleLockUnlockControls = () => {
     setLockControls((prev) => !prev);
   };
@@ -207,9 +171,7 @@ const useVideoControlEvents = () => {
     unmute,
     paused,
     toggleFullScreen,
-    onOverlayClick,
     toggleLockUnlockControls,
-    initializeEventListeners,
   };
 };
 

@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { VideoInfo } from "../../data/VideoPlayer";
 import { VideoPlayerProps } from "./VideoPlayer.types";
 
@@ -9,10 +9,9 @@ import useLoadVideoSource from "./hooks/useLoadVideoSource";
 
 import "./VideoPlayer.css";
 import { useVideoContext } from "./context/VideoContextProvider";
+import useVideoEventListeners from "./hooks/useVideoEventListeners";
 
 const VideoPlayer = (props: VideoPlayerProps) => {
-  const firstRunRef = useRef<boolean>(false);
-
   const {
     initializeVideoProps,
     videoRef,
@@ -22,21 +21,18 @@ const VideoPlayer = (props: VideoPlayerProps) => {
   } = useVideoContext();
   const { muted, resizeMode } = videoPlayerProps;
 
-  const { playVideo, onOverlayClick, initializeEventListeners } =
+  const { playVideo, togglePlayPause, rewindVideo, forwardVideo } =
     useVideoControlEvents();
+  const { onOverlayClick } = useVideoEventListeners(
+    togglePlayPause,
+    rewindVideo,
+    forwardVideo
+  );
   useLoadVideoSource(playVideo);
 
   useEffect(() => {
     initializeVideoProps(props);
   }, []);
-
-  useEffect(() => {
-    if (firstRunRef.current == false) {
-      firstRunRef.current = true;
-      return;
-    }
-    initializeEventListeners();
-  }, [videoPlayerProps]);
 
   const Video = useMemo(
     () => (

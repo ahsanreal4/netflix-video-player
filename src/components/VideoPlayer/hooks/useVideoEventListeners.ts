@@ -11,8 +11,6 @@ const useVideoEventListeners = (
   const prevDurationRef = useRef<number>(0);
   const mouseMoveTimeoutRef = useRef<NodeJS.Timeout>();
   const hideMouseTimeoutRef = useRef<NodeJS.Timeout>();
-  const videoLoadedRef = useRef<boolean>(false);
-  const disableControlsRef = useRef<boolean>(false);
 
   const {
     setFullscreen,
@@ -33,14 +31,6 @@ const useVideoEventListeners = (
     loopVideo,
     disableKeyboardArrowEventListeners,
   } = videoPlayerProps;
-
-  useEffect(() => {
-    videoLoadedRef.current = videoLoading;
-  }, [videoLoading]);
-
-  useEffect(() => {
-    disableControlsRef.current = disableControls;
-  }, [disableControls]);
 
   const showCursor = () => {
     document.documentElement.style.cursor = "auto";
@@ -125,7 +115,7 @@ const useVideoEventListeners = (
       return;
     }
     setIsLiveVideo(true);
-  }, []);
+  }, [isLiveVideo]);
 
   const addDurationChangeEventListener = () => {
     if (!videoRef.current) return;
@@ -173,8 +163,7 @@ const useVideoEventListeners = (
   };
 
   const onMouseMove = useCallback(() => {
-    if (disableControlsRef.current == true || videoLoadedRef.current == true)
-      return;
+    if (disableControls || videoLoading) return;
 
     showCursor();
     if (mouseMoveTimeoutRef.current) clearTimeout(mouseMoveTimeoutRef.current);
@@ -182,7 +171,7 @@ const useVideoEventListeners = (
     setShowOverlay(true);
 
     mouseMoveTimeout();
-  }, []);
+  }, [disableControls, videoLoading]);
 
   const addMouseMoveEventListeners = () => {
     if (displayControlsOnFirstRender) onMouseMove();
@@ -206,8 +195,7 @@ const useVideoEventListeners = (
   };
 
   const onVideoClick = useCallback(() => {
-    if (disableControlsRef.current == true || videoLoadedRef.current == true)
-      return;
+    if (disableControls || videoLoading) return;
 
     if (isMobile) {
       setShowOverlay(true);
@@ -219,7 +207,7 @@ const useVideoEventListeners = (
     togglePlayPause();
     setShowOverlay(true);
     onMouseMove();
-  }, []);
+  }, [disableControls, videoLoading]);
 
   const addVideoClickEventListener = () => {
     if (!videoRef.current) return;
@@ -233,16 +221,18 @@ const useVideoEventListeners = (
     videoRef.current.removeEventListener("click", onVideoClick);
   };
 
-  const onKeyboardPress = useCallback((event: KeyboardEvent) => {
-    if (disableControlsRef.current == true || videoLoadedRef.current == true)
-      return;
+  const onKeyboardPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (disableControls || videoLoading == true) return;
 
-    if (event.key == KeyCodes.ArrowLeft) {
-      rewindVideo();
-    } else if (event.key == KeyCodes.ArrowRight) {
-      forwardVideo();
-    }
-  }, []);
+      if (event.key == KeyCodes.ArrowLeft) {
+        rewindVideo();
+      } else if (event.key == KeyCodes.ArrowRight) {
+        forwardVideo();
+      }
+    },
+    [disableControls, videoLoading]
+  );
 
   const addKeyboardEventListener = () => {
     if (!containerRef.current) return;
@@ -254,6 +244,36 @@ const useVideoEventListeners = (
     if (!containerRef.current) return;
 
     document.removeEventListener("keydown", onKeyboardPress);
+  };
+
+  const onOverlayClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (disableControls || videoLoading) return;
+
+    const element: HTMLDivElement = event?.target as HTMLDivElement;
+
+    if (!element) return;
+
+    const dataAttr = element.attributes.getNamedItem("data-attr");
+
+    // Overlay is clicked if dataAttr is not null
+    if (!dataAttr) {
+      if (isMobile) {
+        clearMouseMoveTimeouts();
+        onMouseMove();
+      }
+      return;
+    }
+
+    if (isMobile) {
+      setShowOverlay(false);
+      clearMouseMoveTimeouts();
+      return;
+    }
+
+    clearMouseMoveTimeouts();
+    togglePlayPause();
   };
 
   const initializeEventListeners = () => {
@@ -285,10 +305,12 @@ const useVideoEventListeners = (
   };
 
   useEffect(() => {
+    initializeEventListeners();
+
     return () => {
       removeAllEventListeners();
     };
-  }, []);
+  }, [disableControls, videoLoading, loopVideo, isLiveVideo]);
 
   useEffect(() => {
     if (unableToPlayVideo == true) {
@@ -297,9 +319,7 @@ const useVideoEventListeners = (
   }, [unableToPlayVideo]);
 
   return {
-    clearMouseMoveTimeouts,
-    onMouseMove,
-    initializeEventListeners,
+    onOverlayClick,
   };
 };
 
