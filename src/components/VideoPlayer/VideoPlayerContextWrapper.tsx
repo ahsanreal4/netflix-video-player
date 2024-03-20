@@ -39,7 +39,6 @@ const VideoPlayer = (props: VideoPlayerProps) => {
         style={{ objectFit: resizeMode }}
         preload="auto"
         onWaiting={() => {
-          console.log("waiting");
           setVideoLoading(true);
         }}
         onPlaying={() => {

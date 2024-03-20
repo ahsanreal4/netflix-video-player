@@ -7,6 +7,7 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
   const mouseMoveTimeoutRef = useRef<NodeJS.Timeout>();
   const hideMouseTimeoutRef = useRef<NodeJS.Timeout>();
   const videoLoadedRef = useRef<boolean>(false);
+  const videoEndedRef = useRef<boolean>(false);
 
   const {
     setFullscreen,
@@ -20,12 +21,19 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
     unableToPlayVideo,
     containerRef,
     videoLoading,
+    paused,
   } = useVideoContext();
-  const { displayControlsOnFirstRender, disableControls } = videoPlayerProps;
+  const { displayControlsOnFirstRender, disableControls, loopVideo } =
+    videoPlayerProps;
 
   useEffect(() => {
     videoLoadedRef.current = videoLoading;
   }, [videoLoading]);
+
+  useEffect(() => {
+    if (paused == false) return;
+    videoEndedRef.current = false;
+  }, [paused]);
 
   const showCursor = () => {
     document.documentElement.style.cursor = "auto";
@@ -64,10 +72,18 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
   };
 
   const onVideoEnded = useCallback(() => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || videoEndedRef.current == true) return;
 
     videoRef.current.currentTime = 0;
     setPaused(true);
+    videoEndedRef.current = true;
+
+    // If loop video true we automatically start video
+    if (!loopVideo) return;
+
+    setTimeout(() => {
+      togglePlayPause();
+    }, 500);
   }, []);
 
   const addVideoEndedEventListener = () => {
