@@ -21,7 +21,7 @@ const useVideoControlEvents = () => {
 
   const { disableControls, muted } = videoPlayerProps;
 
-  const { clearMouseMoveTimeouts, onMouseMove } =
+  const { clearMouseMoveTimeouts, onMouseMove, initializeEventListeners } =
     useVideoEventListeners(togglePlayPause);
 
   const animate = (element: HTMLElement) => {
@@ -209,6 +209,7 @@ const useVideoControlEvents = () => {
     toggleFullScreen,
     onOverlayClick,
     toggleLockUnlockControls,
+    initializeEventListeners,
   };
 };
 

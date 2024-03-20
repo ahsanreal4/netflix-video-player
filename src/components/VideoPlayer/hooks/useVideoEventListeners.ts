@@ -7,7 +7,6 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
   const mouseMoveTimeoutRef = useRef<NodeJS.Timeout>();
   const hideMouseTimeoutRef = useRef<NodeJS.Timeout>();
   const videoLoadedRef = useRef<boolean>(false);
-  const videoEndedRef = useRef<boolean>(false);
   const disableControlsRef = useRef<boolean>(false);
 
   const {
@@ -22,7 +21,6 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
     unableToPlayVideo,
     containerRef,
     videoLoading,
-    paused,
   } = useVideoContext();
   const { displayControlsOnFirstRender, disableControls, loopVideo } =
     videoPlayerProps;
@@ -30,11 +28,6 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
   useEffect(() => {
     videoLoadedRef.current = videoLoading;
   }, [videoLoading]);
-
-  useEffect(() => {
-    if (paused == false) return;
-    videoEndedRef.current = false;
-  }, [paused]);
 
   useEffect(() => {
     disableControlsRef.current = disableControls;
@@ -77,19 +70,18 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
   };
 
   const onVideoEnded = useCallback(() => {
-    if (!videoRef.current || videoEndedRef.current == true) return;
+    if (!videoRef.current) return;
 
-    videoRef.current.currentTime = 0;
     setPaused(true);
-    videoEndedRef.current = true;
 
     // If loop video true we automatically start video
     if (!loopVideo) return;
 
+    videoRef.current.currentTime = 0;
     setTimeout(() => {
       togglePlayPause();
     }, 500);
-  }, []);
+  }, [loopVideo]);
 
   const addVideoEndedEventListener = () => {
     if (!videoRef.current) return;
@@ -232,7 +224,7 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
     videoRef.current.removeEventListener("click", onVideoClick);
   };
 
-  const addAllEventListeners = () => {
+  const initializeEventListeners = () => {
     addFullScreenEventListener();
     addVideoEndedEventListener();
     addDurationChangeEventListener();
@@ -259,8 +251,6 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
   };
 
   useEffect(() => {
-    addAllEventListeners();
-
     return () => {
       removeAllEventListeners();
     };
@@ -272,7 +262,11 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
     }
   }, [unableToPlayVideo]);
 
-  return { clearMouseMoveTimeouts, onMouseMove };
+  return {
+    clearMouseMoveTimeouts,
+    onMouseMove,
+    initializeEventListeners,
+  };
 };
 
 export default useVideoEventListeners;
