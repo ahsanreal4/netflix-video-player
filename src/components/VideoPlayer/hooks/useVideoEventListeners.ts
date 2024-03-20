@@ -11,7 +11,7 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
   const {
     setFullscreen,
     videoRef,
-    setVideoLoaded,
+    setVideoLoading,
     isLiveVideo,
     setIsLiveVideo,
     setPaused,
@@ -19,13 +19,13 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
     videoPlayerProps,
     unableToPlayVideo,
     containerRef,
-    videoLoaded,
+    videoLoading,
   } = useVideoContext();
   const { displayControlsOnFirstRender, disableControls } = videoPlayerProps;
 
   useEffect(() => {
-    videoLoadedRef.current = videoLoaded;
-  }, [videoLoaded]);
+    videoLoadedRef.current = videoLoading;
+  }, [videoLoading]);
 
   const showCursor = () => {
     document.documentElement.style.cursor = "auto";
@@ -118,7 +118,7 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
   };
 
   const onVideoLoad = useCallback(() => {
-    setVideoLoaded(true);
+    setVideoLoading(false);
   }, []);
 
   const addLoadEventListener = () => {
@@ -151,7 +151,7 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
   };
 
   const onMouseMove = useCallback(() => {
-    if (videoLoadedRef.current == false) return;
+    if (videoLoadedRef.current == true) return;
 
     showCursor();
     if (mouseMoveTimeoutRef.current) clearTimeout(mouseMoveTimeoutRef.current);
@@ -183,7 +183,7 @@ const useVideoEventListeners = (togglePlayPause: () => void) => {
   };
 
   const onVideoClick = useCallback(() => {
-    if (disableControls || videoLoadedRef.current == false) return;
+    if (disableControls || videoLoadedRef.current == true) return;
 
     if (isMobile) {
       setShowOverlay(true);

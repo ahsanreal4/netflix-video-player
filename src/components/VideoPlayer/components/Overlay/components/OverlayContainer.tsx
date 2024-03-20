@@ -9,7 +9,7 @@ import MobileLockUnlock from "../../BottomControlBar/MobileLockUnlock/MobileLock
 import { Images } from "../../../VideoPlayer.assets";
 
 const OverlayContainer = () => {
-  const { videoLoaded, paused, lockControls, videoPlayerProps } =
+  const { videoLoading, paused, lockControls, videoPlayerProps } =
     useVideoContext();
   const { disableControls, controls } = videoPlayerProps;
   const { disableBackArrow } = controls;
@@ -32,7 +32,7 @@ const OverlayContainer = () => {
           />
         </div>
       )}
-      {lockControls || videoLoaded == false || disableControls ? null : (
+      {lockControls || videoLoading || disableControls ? null : (
         <>
           {disableBackArrow ? null : <TopControlBar />}
           <BottomControlBar />

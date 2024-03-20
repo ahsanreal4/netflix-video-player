@@ -5,12 +5,12 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import OverlayContainer from "./components/OverlayContainer";
 
 const Overlay = () => {
-  const { videoLoaded, showOverlay, unableToPlayVideo } = useVideoContext();
+  const { videoLoading, showOverlay, unableToPlayVideo } = useVideoContext();
 
   return (
     <>
       {showOverlay ? <OverlayContainer /> : null}
-      <LoadingSpinner videoLoaded={videoLoaded} />
+      <LoadingSpinner videoLoading={videoLoading} />
       <UnableToPlayVideo unableToPlayVideo={unableToPlayVideo} />
     </>
   );

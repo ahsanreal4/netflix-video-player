@@ -18,6 +18,32 @@ const VideoProgressSlider = () => {
   const getSecondFormattedTime = (time: number) =>
     time < 10 ? "0" + time.toString() : time.toString();
 
+  const updateVideoTimeStates = (time: number, duration: number) => {
+    const progressPercentage = (time / duration) * 100;
+
+    let hours = Math.floor(time / (60 * 60));
+    let minutes = Math.floor(time / 60);
+    if (minutes >= 60) {
+      minutes = minutes % 60;
+    }
+
+    const seconds = Math.floor(time % 60);
+
+    let currentTimeStr = "";
+    if (hours > 0) {
+      currentTimeStr += getFormattedTime(hours) + ":";
+    }
+
+    let minuteStr =
+      hours > 0 ? getSecondFormattedTime(minutes) : getFormattedTime(minutes);
+    minuteStr += ":";
+
+    currentTimeStr += minuteStr + getSecondFormattedTime(seconds);
+
+    setCurrentTime(currentTimeStr);
+    setSliderPercentage(progressPercentage);
+  };
+
   const addProgressEventListener = () => {
     if (!videoRef.current) return;
 
@@ -26,32 +52,7 @@ const VideoProgressSlider = () => {
 
       if (!videoElement) return;
 
-      const progressPercentage =
-        (videoElement.currentTime / videoElement.duration) * 100;
-
-      const time = videoElement.currentTime;
-
-      let hours = Math.floor(time / (60 * 60));
-      let minutes = Math.floor(time / 60);
-      if (minutes >= 60) {
-        minutes = minutes % 60;
-      }
-
-      const seconds = Math.floor(time % 60);
-
-      let currentTimeStr = "";
-      if (hours > 0) {
-        currentTimeStr += getFormattedTime(hours) + ":";
-      }
-
-      let minuteStr =
-        hours > 0 ? getSecondFormattedTime(minutes) : getFormattedTime(minutes);
-      minuteStr += ":";
-
-      currentTimeStr += minuteStr + getSecondFormattedTime(seconds);
-
-      setCurrentTime(currentTimeStr);
-      setSliderPercentage(progressPercentage);
+      updateVideoTimeStates(videoElement.currentTime, videoElement.duration);
     });
   };
 
@@ -59,6 +60,15 @@ const VideoProgressSlider = () => {
     if (!videoRef.current) return;
 
     videoRef.current.removeEventListener("timeupdate", () => {});
+  };
+
+  const initializeVideoStartingTime = () => {
+    if (!videoRef.current) return;
+
+    updateVideoTimeStates(
+      videoRef.current.currentTime,
+      videoRef.current.duration
+    );
   };
 
   const initializeVideoTotalTime = () => {
@@ -89,6 +99,7 @@ const VideoProgressSlider = () => {
   };
 
   useEffect(() => {
+    initializeVideoStartingTime();
     addProgressEventListener();
 
     return () => {

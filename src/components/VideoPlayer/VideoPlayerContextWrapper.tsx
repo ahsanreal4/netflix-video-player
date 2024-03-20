@@ -11,8 +11,13 @@ import "./VideoPlayer.css";
 import { useVideoContext } from "./context/VideoContextProvider";
 
 const VideoPlayer = (props: VideoPlayerProps) => {
-  const { initializeVideoProps, videoRef, videoPlayerProps, containerRef } =
-    useVideoContext();
+  const {
+    initializeVideoProps,
+    videoRef,
+    videoPlayerProps,
+    containerRef,
+    setVideoLoading,
+  } = useVideoContext();
   const { muted, resizeMode } = videoPlayerProps;
 
   const { playVideo, onOverlayClick } = useVideoControlEvents();
@@ -33,6 +38,13 @@ const VideoPlayer = (props: VideoPlayerProps) => {
         muted={muted}
         style={{ objectFit: resizeMode }}
         preload="auto"
+        onWaiting={() => {
+          console.log("waiting");
+          setVideoLoading(true);
+        }}
+        onPlaying={() => {
+          setVideoLoading(false);
+        }}
       />
     ),
     [muted, resizeMode]

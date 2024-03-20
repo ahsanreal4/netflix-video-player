@@ -13,7 +13,7 @@ const useVideoControlEvents = () => {
     isLiveVideo,
     videoPlayerProps,
     containerRef,
-    videoLoaded,
+    videoLoading,
     setShowOverlay,
     setLockControls,
     setVideoPlayerProps,
@@ -165,7 +165,7 @@ const useVideoControlEvents = () => {
   const onOverlayClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    if (disableControls || videoLoaded == false) return;
+    if (disableControls || videoLoading) return;
 
     const element: HTMLDivElement = event?.target as HTMLDivElement;
 

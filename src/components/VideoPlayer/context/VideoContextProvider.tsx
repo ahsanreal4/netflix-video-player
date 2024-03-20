@@ -19,7 +19,7 @@ export const VideoContextProvider = ({
   const [fullscreen, setFullscreen] = useState(false);
   const [paused, setPaused] = useState(true);
   const [isLiveVideo, setIsLiveVideo] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoLoading, setVideoLoading] = useState(true);
   const [lockControls, setLockControls] = useState(false);
   const [videoPlayerProps, setVideoPlayerProps] =
     useState<IVideoPlayerDefaultProps>(VideoPlayerDefaultProps);
@@ -45,8 +45,8 @@ export const VideoContextProvider = ({
         containerRef,
         isLiveVideo,
         setIsLiveVideo,
-        videoLoaded,
-        setVideoLoaded,
+        videoLoading,
+        setVideoLoading,
         showOverlay,
         setShowOverlay,
         unableToPlayVideo,

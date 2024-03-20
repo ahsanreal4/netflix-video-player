@@ -1,11 +1,11 @@
 import classes from "../Overlay.module.css";
 
 interface LoadingSpinnerProps {
-  videoLoaded: boolean;
+  videoLoading: boolean;
 }
 
-const LoadingSpinner = ({ videoLoaded }: LoadingSpinnerProps) => {
-  if (videoLoaded) return null;
+const LoadingSpinner = ({ videoLoading }: LoadingSpinnerProps) => {
+  if (!videoLoading) return null;
 
   return (
     <div className={classes.loading_spinner_container}>

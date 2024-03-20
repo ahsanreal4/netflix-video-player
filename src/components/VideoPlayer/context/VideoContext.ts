@@ -12,7 +12,7 @@ interface VideoContextState {
   videoRef: RefObject<HTMLVideoElement>;
   containerRef: RefObject<HTMLDivElement>;
   isLiveVideo: boolean;
-  videoLoaded: boolean;
+  videoLoading: boolean;
   showOverlay: boolean;
   unableToPlayVideo: boolean;
   lockControls: boolean;
@@ -23,7 +23,7 @@ interface VideoContextState {
     React.SetStateAction<IVideoPlayerDefaultProps>
   >;
   setIsLiveVideo: React.Dispatch<React.SetStateAction<boolean>>;
-  setVideoLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+  setVideoLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setShowOverlay: React.Dispatch<React.SetStateAction<boolean>>;
   setUnableToPlayVideo: React.Dispatch<React.SetStateAction<boolean>>;
   setLockControls: React.Dispatch<React.SetStateAction<boolean>>;
@@ -37,7 +37,7 @@ const INITIAL_STATE: VideoContextState = {
   videoPlayerProps: VideoPlayerDefaultProps,
   videoRef: { current: null },
   containerRef: { current: null },
-  videoLoaded: false,
+  videoLoading: false,
   showOverlay: false,
   unableToPlayVideo: false,
   lockControls: false,
@@ -46,7 +46,7 @@ const INITIAL_STATE: VideoContextState = {
   setPaused: () => {},
   setVideoPlayerProps: () => {},
   setIsLiveVideo: () => {},
-  setVideoLoaded: () => {},
+  setVideoLoading: () => {},
   setShowOverlay: () => {},
   initializeVideoProps: () => {},
   setUnableToPlayVideo: () => {},
