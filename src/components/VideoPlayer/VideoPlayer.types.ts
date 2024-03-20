@@ -6,6 +6,9 @@ export interface Controls {
   disableVolumeButton?: boolean;
   disableFullScreenButton?: boolean;
   disableBackArrow?: boolean;
+  disableProgressBar?: boolean;
+  disableTime?: boolean;
+  disableLockButton?: boolean;
 }
 
 export interface VideoPlayerProps {
@@ -42,6 +45,9 @@ export const VideoDefaultControls: Controls = {
   disablePlayPauseButton: false,
   disableVolumeButton: false,
   disableBackArrow: true,
+  disableTime: false,
+  disableProgressBar: false,
+  disableLockButton: false,
 };
 
 export const VideoPlayerDefaultProps: IVideoPlayerDefaultProps = {

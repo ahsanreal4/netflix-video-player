@@ -2,6 +2,7 @@ import { ReactNode, useContext, useRef, useState } from "react";
 import VideoContext from "./VideoContext";
 import {
   IVideoPlayerDefaultProps,
+  VideoDefaultControls,
   VideoPlayerDefaultProps,
   VideoPlayerProps,
 } from "../VideoPlayer.types";
@@ -28,7 +29,35 @@ export const VideoContextProvider = ({
 
   const initializeVideoProps = (props: VideoPlayerProps) => {
     if (props.isLive) setIsLiveVideo(true);
-    setVideoPlayerProps({ ...VideoPlayerDefaultProps, ...props });
+    setVideoPlayerProps({
+      ...VideoPlayerDefaultProps,
+      ...props,
+      controls: {
+        disableBackArrow:
+          props.controls?.disableBackArrow ??
+          VideoDefaultControls.disableBackArrow,
+        disableForwardRewindButtons:
+          props.controls?.disableForwardRewindButtons ??
+          VideoDefaultControls.disableForwardRewindButtons,
+        disableFullScreenButton:
+          props.controls?.disableFullScreenButton ??
+          VideoDefaultControls.disableFullScreenButton,
+        disablePlayPauseButton:
+          props.controls?.disablePlayPauseButton ??
+          VideoDefaultControls.disablePlayPauseButton,
+        disableProgressBar:
+          props.controls?.disableProgressBar ??
+          VideoDefaultControls.disableProgressBar,
+        disableTime:
+          props.controls?.disableTime ?? VideoDefaultControls.disableTime,
+        disableVolumeButton:
+          props.controls?.disableVolumeButton ??
+          VideoDefaultControls.disableVolumeButton,
+        disableLockButton:
+          props.controls?.disableLockButton ??
+          VideoDefaultControls.disableLockButton,
+      },
+    });
   };
 
   return (

@@ -10,13 +10,15 @@ import Lock from "../../../assets/lock";
 
 const VideoPlaybackControls = () => {
   const { videoPlayerProps } = useVideoContext();
+  const { controls } = videoPlayerProps;
+
   const { toggleLockUnlockControls } = useVideoControlEvents();
 
   return (
     <div className={classes.video_playback_controls_container}>
       {isMobile ? null : <PlaybackButtons />}
       {videoPlayerProps.controls?.disableVolumeButton ? null : <VolumeButton />}
-      {isMobile ? (
+      {isMobile && controls.disableLockButton == false ? (
         <div onClick={toggleLockUnlockControls}>
           <Lock className={classes.lock_icon} />
         </div>

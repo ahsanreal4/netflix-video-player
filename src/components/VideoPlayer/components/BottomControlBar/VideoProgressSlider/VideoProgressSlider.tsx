@@ -7,7 +7,10 @@ import { useEffect, useState } from "react";
 const color = "red";
 
 const VideoProgressSlider = () => {
-  const { videoRef, paused, isLiveVideo } = useVideoContext();
+  const { videoRef, paused, isLiveVideo, videoPlayerProps } = useVideoContext();
+  const { controls } = videoPlayerProps;
+  const { disableProgressBar, disableTime } = controls;
+
   const [currentTime, setCurrentTime] = useState<string>("");
   const [videoTotalTime, setVideoTotalTime] = useState<string>("");
   const [sliderPercentage, setSliderPercentage] = useState<number>(0);
@@ -114,7 +117,7 @@ const VideoProgressSlider = () => {
 
   return (
     <div className={classes.container}>
-      {isLiveVideo ? null : (
+      {isLiveVideo || disableProgressBar ? null : (
         <Slider
           style={{ cursor: "grab" }}
           styles={{
@@ -145,7 +148,9 @@ const VideoProgressSlider = () => {
         />
       )}
 
-      {videoTotalTime.length != 0 && isLiveVideo == false ? (
+      {videoTotalTime.length != 0 &&
+      isLiveVideo == false &&
+      disableTime == false ? (
         <p className={classes.remaining_time_text}>
           {currentTime}&nbsp;:&nbsp;{videoTotalTime}
         </p>
