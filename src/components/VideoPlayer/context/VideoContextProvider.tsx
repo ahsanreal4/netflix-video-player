@@ -57,6 +57,9 @@ export const VideoContextProvider = ({
         disableLockButton:
           props.controls?.disableLockButton ??
           VideoDefaultControls.disableLockButton,
+        disablePlaybackSpeedButton:
+          props.controls?.disablePlaybackSpeedButton ??
+          VideoDefaultControls.disablePlaybackSpeedButton,
       },
     });
   };

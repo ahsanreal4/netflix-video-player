@@ -7,16 +7,21 @@ import { useVideoContext } from "../../../context/VideoContextProvider";
 import useVideoControlEvents from "../../../hooks/useVideoControlEvents";
 
 import classes from "./VideoOtherControls.module.css";
+import PlaybackSpeed from "../../../assets/playback-speed";
 
 const VideoOtherControls = () => {
   const { videoPlayerProps, fullscreen } = useVideoContext();
   const { controls } = videoPlayerProps;
+  const { disableFullScreenButton, disablePlaybackSpeedButton } = controls;
 
   const { toggleFullScreen } = useVideoControlEvents();
 
   return (
     <div className={classes.container}>
-      {controls.disableFullScreenButton ? null : (
+      {disablePlaybackSpeedButton ? null : (
+        <PlaybackSpeed className="icon small_icon" />
+      )}
+      {disableFullScreenButton ? null : (
         <div onClick={toggleFullScreen}>
           {fullscreen ? (
             <ExitFullScreen className="icon small_icon" />

@@ -11,6 +11,7 @@ export interface Controls {
   disableProgressBar?: boolean;
   disableTime?: boolean;
   disableLockButton?: boolean;
+  disablePlaybackSpeedButton?: boolean;
 }
 
 export interface VideoPlayerProps {
@@ -54,6 +55,7 @@ export const VideoDefaultControls: Controls = {
   disableTime: false,
   disableProgressBar: false,
   disableLockButton: false,
+  disablePlaybackSpeedButton: false,
 };
 
 export const VideoPlayerDefaultProps: IVideoPlayerDefaultProps = {
