@@ -34,6 +34,11 @@ const VideoPlayer = (props: VideoPlayerProps) => {
     initializeVideoProps(props);
   }, []);
 
+  useEffect(() => {
+    if (!videoPlayerProps.videoRef) return;
+    videoPlayerProps.videoRef.current = videoRef.current;
+  }, [videoRef.current, videoPlayerProps.videoRef]);
+
   const Video = useMemo(
     () => (
       <video

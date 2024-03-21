@@ -1,3 +1,5 @@
+import { MutableRefObject } from "react";
+
 export type ResizeModeType = "fill" | "cover" | "contain";
 
 export interface Controls {
@@ -24,6 +26,7 @@ export interface VideoPlayerProps {
   navigation?: any;
   displayControlsOnFirstRender?: boolean;
   disableKeyboardArrowEventListeners?: boolean;
+  videoRef?: MutableRefObject<HTMLVideoElement | null>;
 }
 
 export interface IVideoPlayerDefaultProps {
@@ -39,6 +42,7 @@ export interface IVideoPlayerDefaultProps {
   navigation: any;
   displayControlsOnFirstRender: boolean;
   disableKeyboardArrowEventListeners: boolean;
+  videoRef?: MutableRefObject<HTMLVideoElement | null>;
 }
 
 export const VideoDefaultControls: Controls = {
