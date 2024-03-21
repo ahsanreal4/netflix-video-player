@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useVideoContext } from "../../../context/VideoContextProvider";
+import { VideoEventListeners } from "../../../VideoPlayer.types";
 
 const useFullScreenEventListener = () => {
   const { containerRef, setFullscreen } = useVideoContext();
@@ -18,7 +19,7 @@ const useFullScreenEventListener = () => {
     if (!containerRef.current) return;
 
     containerRef.current.addEventListener(
-      "fullscreenchange",
+      VideoEventListeners.FullScreenChange,
       onFullScreenChange
     );
   };
@@ -27,7 +28,7 @@ const useFullScreenEventListener = () => {
     if (!containerRef.current) return;
 
     containerRef.current.removeEventListener(
-      "fullscreenchange",
+      VideoEventListeners.FullScreenChange,
       onFullScreenChange
     );
   };

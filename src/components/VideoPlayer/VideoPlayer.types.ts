@@ -91,3 +91,14 @@ export enum KeyCodes {
   ArrowLeft = "ArrowLeft",
   ArrowRight = "ArrowRight",
 }
+
+export enum VideoEventListeners {
+  TimeUpdate = "timeupdate",
+  DurationChange = "durationchange",
+  FullScreenChange = "fullscreenchange",
+  KeyDown = "keydown",
+  MouseMove = "mousemove",
+  Click = "click",
+  Ended = "ended",
+  Loaded = "loadeddata",
+}

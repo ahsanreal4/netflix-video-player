@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { KeyCodes } from "../../../VideoPlayer.types";
+import { KeyCodes, VideoEventListeners } from "../../../VideoPlayer.types";
 import { useVideoContext } from "../../../context/VideoContextProvider";
 
 const useKeyboardPressEventListener = (
@@ -23,11 +23,11 @@ const useKeyboardPressEventListener = (
   );
 
   const addKeyboardEventListener = () => {
-    document.addEventListener("keydown", onKeyboardPress);
+    document.addEventListener(VideoEventListeners.KeyDown, onKeyboardPress);
   };
 
   const removeKeyboardEventListener = () => {
-    document.removeEventListener("keydown", onKeyboardPress);
+    document.removeEventListener(VideoEventListeners.KeyDown, onKeyboardPress);
   };
 
   return { addKeyboardEventListener, removeKeyboardEventListener };

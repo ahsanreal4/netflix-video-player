@@ -4,6 +4,7 @@ import classes from "./VideoProgressSlider.module.css";
 import { useVideoContext } from "../../../context/VideoContextProvider";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
+import { VideoEventListeners } from "../../../VideoPlayer.types";
 
 const color = "red";
 
@@ -51,7 +52,7 @@ const VideoProgressSlider = () => {
   const addProgressEventListener = () => {
     if (!videoRef.current) return;
 
-    videoRef.current.addEventListener("timeupdate", () => {
+    videoRef.current.addEventListener(VideoEventListeners.TimeUpdate, () => {
       const videoElement = videoRef.current;
 
       if (!videoElement) return;
@@ -63,7 +64,10 @@ const VideoProgressSlider = () => {
   const removeProgressEventListener = () => {
     if (!videoRef.current) return;
 
-    videoRef.current.removeEventListener("timeupdate", () => {});
+    videoRef.current.removeEventListener(
+      VideoEventListeners.TimeUpdate,
+      () => {}
+    );
   };
 
   const initializeVideoStartingTime = () => {

@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useVideoContext } from "../../../context/VideoContextProvider";
+import { VideoEventListeners } from "../../../VideoPlayer.types";
 
 const useVideoEndedEventListener = (togglePlayPause: () => void) => {
   const { videoRef, setPaused, videoPlayerProps } = useVideoContext();
@@ -22,13 +23,16 @@ const useVideoEndedEventListener = (togglePlayPause: () => void) => {
   const addVideoEndedEventListener = () => {
     if (!videoRef.current) return;
 
-    videoRef.current.addEventListener("ended", onVideoEnded);
+    videoRef.current.addEventListener(VideoEventListeners.Ended, onVideoEnded);
   };
 
   const removeVideoEndedEventListener = () => {
     if (!videoRef.current) return;
 
-    videoRef.current.removeEventListener("ended", onVideoEnded);
+    videoRef.current.removeEventListener(
+      VideoEventListeners.Ended,
+      onVideoEnded
+    );
   };
 
   return { addVideoEndedEventListener, removeVideoEndedEventListener };

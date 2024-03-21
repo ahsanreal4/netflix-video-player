@@ -1,5 +1,6 @@
 import { useCallback, useRef } from "react";
 import { useVideoContext } from "../../../context/VideoContextProvider";
+import { VideoEventListeners } from "../../../VideoPlayer.types";
 
 const useDurationChangeEventListener = () => {
   const prevDurationRef = useRef<number>(0);
@@ -32,13 +33,19 @@ const useDurationChangeEventListener = () => {
   const addDurationChangeEventListener = () => {
     if (!videoRef.current) return;
 
-    videoRef.current.addEventListener("durationchange", onDurationChange);
+    videoRef.current.addEventListener(
+      VideoEventListeners.DurationChange,
+      onDurationChange
+    );
   };
 
   const removeDurationChangeEventListener = () => {
     if (!videoRef.current) return;
 
-    videoRef.current.removeEventListener("durationchange", onDurationChange);
+    videoRef.current.removeEventListener(
+      VideoEventListeners.DurationChange,
+      onDurationChange
+    );
   };
 
   return { removeDurationChangeEventListener, addDurationChangeEventListener };

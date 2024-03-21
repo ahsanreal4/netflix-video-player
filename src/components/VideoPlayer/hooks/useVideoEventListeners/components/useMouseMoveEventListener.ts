@@ -1,6 +1,7 @@
 import { useCallback, useRef } from "react";
 import { useVideoContext } from "../../../context/VideoContextProvider";
 import { isMobile } from "react-device-detect";
+import { VideoEventListeners } from "../../../VideoPlayer.types";
 
 const useMouseMoveEventListener = () => {
   const mouseMoveTimeoutRef = useRef<NodeJS.Timeout>();
@@ -57,13 +58,19 @@ const useMouseMoveEventListener = () => {
 
     if (!containerRef.current) return;
 
-    containerRef.current.addEventListener("mousemove", onMouseMove);
+    containerRef.current.addEventListener(
+      VideoEventListeners.MouseMove,
+      onMouseMove
+    );
   };
 
   const removeMouseMoveEventListeners = () => {
     if (!containerRef.current) return;
 
-    containerRef.current.removeEventListener("mousemove", onMouseMove);
+    containerRef.current.removeEventListener(
+      VideoEventListeners.MouseMove,
+      onMouseMove
+    );
     if (mouseMoveTimeoutRef.current) clearTimeout(mouseMoveTimeoutRef.current);
   };
 

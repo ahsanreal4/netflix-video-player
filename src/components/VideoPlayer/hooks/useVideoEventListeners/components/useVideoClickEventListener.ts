@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useVideoContext } from "../../../context/VideoContextProvider";
 import { isMobile } from "react-device-detect";
+import { VideoEventListeners } from "../../../VideoPlayer.types";
 
 const useVideoClickEventListener = (
   togglePlayPause: () => void,
@@ -29,13 +30,16 @@ const useVideoClickEventListener = (
   const addVideoClickEventListener = () => {
     if (!videoRef.current) return;
 
-    videoRef.current.addEventListener("click", onVideoClick);
+    videoRef.current.addEventListener(VideoEventListeners.Click, onVideoClick);
   };
 
   const removeVideoClickEventListener = () => {
     if (!videoRef.current) return;
 
-    videoRef.current.removeEventListener("click", onVideoClick);
+    videoRef.current.removeEventListener(
+      VideoEventListeners.Click,
+      onVideoClick
+    );
   };
 
   return { addVideoClickEventListener, removeVideoClickEventListener };
