@@ -18,6 +18,7 @@ const VideoPlayer = (props: VideoPlayerProps) => {
     videoPlayerProps,
     containerRef,
     setVideoLoading,
+    videoFirstTimeLoaded,
   } = useVideoContext();
   const { muted, resizeMode } = videoPlayerProps;
 
@@ -54,11 +55,13 @@ const VideoPlayer = (props: VideoPlayerProps) => {
           setVideoLoading(true);
         }}
         onCanPlayThrough={() => {
+          if (videoFirstTimeLoaded == false) return;
+
           setVideoLoading(false);
         }}
       />
     ),
-    [muted, resizeMode]
+    [muted, resizeMode, videoFirstTimeLoaded]
   );
 
   return (
