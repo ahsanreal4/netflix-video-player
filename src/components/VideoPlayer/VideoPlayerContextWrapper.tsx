@@ -53,7 +53,7 @@ const VideoPlayer = (props: VideoPlayerProps) => {
         onWaiting={() => {
           setVideoLoading(true);
         }}
-        onPlaying={() => {
+        onCanPlayThrough={() => {
           setVideoLoading(false);
         }}
       />
