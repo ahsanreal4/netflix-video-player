@@ -9,7 +9,7 @@ import useLoadVideoSource from "./hooks/useLoadVideoSource";
 
 import "./VideoPlayer.css";
 import { useVideoContext } from "./context/VideoContextProvider";
-import useVideoEventListeners from "./hooks/useVideoEventListeners";
+import useVideoEventListeners from "./hooks/useVideoEventListeners/useVideoEventListeners";
 
 const VideoPlayer = (props: VideoPlayerProps) => {
   const {
