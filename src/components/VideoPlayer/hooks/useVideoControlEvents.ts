@@ -14,6 +14,7 @@ const useVideoControlEvents = () => {
     containerRef,
     setLockControls,
     setVideoPlayerProps,
+    videoLoading,
   } = useVideoContext();
 
   const { muted } = videoPlayerProps;
@@ -43,6 +44,9 @@ const useVideoControlEvents = () => {
   };
 
   const startAnimation = () => {
+    // If loading spinner shows we hide animations
+    if (videoLoading) return;
+
     const animationImage = document.getElementById(
       "play_pause_animation_image"
     );

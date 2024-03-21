@@ -27,8 +27,13 @@ const useVideoEventListeners = (
     removeVideoEndedEventListener,
   } = useGetAllEventListeners(togglePlayPause, rewindVideo, forwardVideo);
 
-  const { isLiveVideo, videoPlayerProps, unableToPlayVideo, videoLoading } =
-    useVideoContext();
+  const {
+    isLiveVideo,
+    videoPlayerProps,
+    unableToPlayVideo,
+    videoLoading,
+    videoFirstTimeLoaded,
+  } = useVideoContext();
   const { disableControls, loopVideo, disableKeyboardArrowEventListeners } =
     videoPlayerProps;
 
@@ -66,7 +71,13 @@ const useVideoEventListeners = (
     return () => {
       removeAllEventListeners();
     };
-  }, [disableControls, videoLoading, loopVideo, isLiveVideo]);
+  }, [
+    disableControls,
+    videoLoading,
+    loopVideo,
+    isLiveVideo,
+    videoFirstTimeLoaded,
+  ]);
 
   useEffect(() => {
     if (unableToPlayVideo == true) {

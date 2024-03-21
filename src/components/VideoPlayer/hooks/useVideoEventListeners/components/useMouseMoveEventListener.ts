@@ -7,8 +7,13 @@ const useMouseMoveEventListener = () => {
   const mouseMoveTimeoutRef = useRef<NodeJS.Timeout>();
   const hideMouseTimeoutRef = useRef<NodeJS.Timeout>();
 
-  const { containerRef, setShowOverlay, videoLoading, videoPlayerProps } =
-    useVideoContext();
+  const {
+    containerRef,
+    setShowOverlay,
+    videoLoading,
+    videoPlayerProps,
+    videoFirstTimeLoaded,
+  } = useVideoContext();
   const { disableControls, displayControlsOnFirstRender } = videoPlayerProps;
 
   const showCursor = () => {
@@ -43,7 +48,7 @@ const useMouseMoveEventListener = () => {
   };
 
   const onMouseMove = useCallback(() => {
-    if (disableControls || videoLoading) return;
+    if (disableControls || videoFirstTimeLoaded == false) return;
 
     showCursor();
     if (mouseMoveTimeoutRef.current) clearTimeout(mouseMoveTimeoutRef.current);

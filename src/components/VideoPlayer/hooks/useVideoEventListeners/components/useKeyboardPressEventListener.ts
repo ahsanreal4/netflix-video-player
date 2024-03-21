@@ -6,12 +6,13 @@ const useKeyboardPressEventListener = (
   rewindVideo: () => void,
   forwardVideo: () => void
 ) => {
-  const { videoPlayerProps, videoLoading } = useVideoContext();
+  const { videoPlayerProps, videoLoading, videoFirstTimeLoaded } =
+    useVideoContext();
   const { disableControls } = videoPlayerProps;
 
   const onKeyboardPress = useCallback(
     (event: KeyboardEvent) => {
-      if (disableControls || videoLoading == true) return;
+      if (disableControls || videoFirstTimeLoaded == false) return;
 
       if (event.key == KeyCodes.ArrowLeft) {
         rewindVideo();
@@ -19,7 +20,7 @@ const useKeyboardPressEventListener = (
         forwardVideo();
       }
     },
-    [disableControls, videoLoading]
+    [disableControls, videoLoading, videoFirstTimeLoaded]
   );
 
   const addKeyboardEventListener = () => {

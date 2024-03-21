@@ -13,6 +13,7 @@ interface VideoContextState {
   containerRef: RefObject<HTMLDivElement>;
   isLiveVideo: boolean;
   videoLoading: boolean;
+  videoFirstTimeLoaded: boolean;
   showOverlay: boolean;
   unableToPlayVideo: boolean;
   lockControls: boolean;
@@ -27,6 +28,7 @@ interface VideoContextState {
   setShowOverlay: React.Dispatch<React.SetStateAction<boolean>>;
   setUnableToPlayVideo: React.Dispatch<React.SetStateAction<boolean>>;
   setLockControls: React.Dispatch<React.SetStateAction<boolean>>;
+  setVideoFirstTimeLoaded: React.Dispatch<React.SetStateAction<boolean>>;
   initializeVideoProps: (props: VideoPlayerProps) => void;
 }
 
@@ -38,6 +40,7 @@ const INITIAL_STATE: VideoContextState = {
   videoRef: { current: null },
   containerRef: { current: null },
   videoLoading: false,
+  videoFirstTimeLoaded: false,
   showOverlay: false,
   unableToPlayVideo: false,
   lockControls: false,
@@ -51,6 +54,7 @@ const INITIAL_STATE: VideoContextState = {
   initializeVideoProps: () => {},
   setUnableToPlayVideo: () => {},
   setLockControls: () => {},
+  setVideoFirstTimeLoaded: () => {},
 };
 
 const VideoContext = createContext(INITIAL_STATE);

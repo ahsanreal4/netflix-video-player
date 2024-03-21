@@ -15,5 +15,5 @@ const streamLink =
 
 export const VideoInfo = {
   waitingImage: "",
-  link: twentySecondsMp4,
+  link: HlsLink,
 };

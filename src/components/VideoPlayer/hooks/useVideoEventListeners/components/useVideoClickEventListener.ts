@@ -8,12 +8,17 @@ const useVideoClickEventListener = (
   onMouseMove: () => void,
   clearMouseMoveTimeouts: () => void
 ) => {
-  const { videoLoading, videoPlayerProps, videoRef, setShowOverlay } =
-    useVideoContext();
+  const {
+    videoLoading,
+    videoPlayerProps,
+    videoRef,
+    setShowOverlay,
+    videoFirstTimeLoaded,
+  } = useVideoContext();
   const { disableControls } = videoPlayerProps;
 
   const onVideoClick = useCallback(() => {
-    if (disableControls || videoLoading) return;
+    if (disableControls || videoFirstTimeLoaded == false) return;
 
     if (isMobile) {
       setShowOverlay(true);
@@ -25,7 +30,7 @@ const useVideoClickEventListener = (
     togglePlayPause();
     setShowOverlay(true);
     onMouseMove();
-  }, [disableControls, videoLoading]);
+  }, [disableControls, videoLoading, videoFirstTimeLoaded]);
 
   const addVideoClickEventListener = () => {
     if (!videoRef.current) return;

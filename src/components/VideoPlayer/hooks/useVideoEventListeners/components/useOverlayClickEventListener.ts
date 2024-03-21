@@ -6,13 +6,14 @@ const useOverlayClickEventListener = (
   onMouseMove: () => void,
   clearMouseMoveTimeouts: () => void
 ) => {
-  const { videoLoading, videoPlayerProps, setShowOverlay } = useVideoContext();
+  const { videoPlayerProps, setShowOverlay, videoFirstTimeLoaded } =
+    useVideoContext();
   const { disableControls } = videoPlayerProps;
 
   const onOverlayClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    if (disableControls || videoLoading) return;
+    if (disableControls || videoFirstTimeLoaded == false) return;
 
     const element: HTMLDivElement = event?.target as HTMLDivElement;
 

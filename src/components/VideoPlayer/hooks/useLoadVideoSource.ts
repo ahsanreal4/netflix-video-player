@@ -10,6 +10,7 @@ const useLoadVideoSource = (playVideo: () => void) => {
     setVideoLoading,
     setVideoPlayerProps,
     setUnableToPlayVideo,
+    setVideoFirstTimeLoaded,
   } = useVideoContext();
   const { src, autoPlay } = videoPlayerProps;
 
@@ -61,6 +62,7 @@ const useLoadVideoSource = (playVideo: () => void) => {
     if (!isSourceValid) {
       setVideoLoading(false);
       setVideoPlayerProps({ ...videoPlayerProps, disableControls: true });
+      setVideoFirstTimeLoaded(true);
       setUnableToPlayVideo(true);
       return;
     }
