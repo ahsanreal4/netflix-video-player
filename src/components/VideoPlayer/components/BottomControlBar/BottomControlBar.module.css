@@ -44,4 +44,8 @@
     height: unset;
     min-height: unset;
   }
+
+  .controls_container {
+    gap: calc(4vh + 10px);
+  }
 }

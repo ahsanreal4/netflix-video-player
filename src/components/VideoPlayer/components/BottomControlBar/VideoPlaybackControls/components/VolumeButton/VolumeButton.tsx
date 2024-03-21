@@ -102,16 +102,19 @@ const VolumeButton = ({ color = "red" }) => {
         >
           <Slider
             styles={{
-              track: { backgroundColor: color },
+              track: { backgroundColor: color, width: 7 },
               handle: {
                 color: color,
                 backgroundColor: color,
-                borderColor: color,
+                left: 6.8,
+                border: "2px solid red",
+                boxShadow: "0 0 0 2px red",
               },
-              rail: {},
+              rail: {
+                width: 7,
+              },
             }}
-            dotStyle={{ color: color }}
-            activeDotStyle={{ color: color }}
+            style={{ width: 20 }}
             vertical
             onChange={(value: number | number[]) => {
               if (typeof value == "number") {
