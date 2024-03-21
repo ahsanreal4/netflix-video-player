@@ -3,6 +3,7 @@ import Slider from "rc-slider";
 import classes from "./VideoProgressSlider.module.css";
 import { useVideoContext } from "../../../context/VideoContextProvider";
 import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 
 const color = "red";
 
@@ -121,18 +122,19 @@ const VideoProgressSlider = () => {
         <Slider
           style={{ cursor: "grab" }}
           styles={{
-            track: { backgroundColor: color },
+            track: { backgroundColor: color, height: isMobile ? 5 : 7 },
             handle: {
               color: color,
               backgroundColor: color,
-              borderColor: color,
+              border: isMobile ? "1px solid red" : "2px solid red",
+              boxShadow: isMobile ? "0 0 0 1px red" : "0 0 0 2px red",
+              top: isMobile ? 6 : 6,
             },
             rail: {
+              height: isMobile ? 5 : 7,
               backgroundColor: "gray",
             },
           }}
-          dotStyle={{ color: color }}
-          activeDotStyle={{ color: color }}
           onChange={(value: number | number[]) => {
             if (typeof value == "number") {
               if (typeof videoRef.current?.currentTime != "number") return;
