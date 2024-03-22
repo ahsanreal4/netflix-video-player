@@ -1,0 +1,29 @@
+.container {
+  position: relative;
+}
+
+.playback_settings_container {
+  width: 200px;
+  background-color: rgb(37, 35, 35);
+  position: absolute;
+  bottom: 65px;
+  z-index: 5;
+  right: 5px;
+  border-radius: 7px;
+  color: white;
+}
+
+.playback_speeds_container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.playback_speeds_item > p {
+  padding: 10px 15px;
+}
+
+.playback_speeds_item:hover {
+  background-color: rgba(192, 182, 182, 0.24);
+  cursor: pointer;
+}

@@ -1,5 +1,5 @@
 import { isMobile } from "react-device-detect";
-import { Volume } from "../VideoPlayer.types";
+import { PlaybackRates, Volume } from "../VideoPlayer.types";
 import { useVideoContext } from "../context/VideoContextProvider";
 
 const useVideoControlEvents = () => {
@@ -164,6 +164,22 @@ const useVideoControlEvents = () => {
     setLockControls((prev) => !prev);
   };
 
+  const changePlaybackRate = (rate: PlaybackRates) => {
+    if (!videoRef.current) return;
+
+    if (rate == "Normal") {
+      videoRef.current.playbackRate = 1;
+    } else {
+      videoRef.current.playbackRate = Number(rate);
+    }
+  };
+
+  const getPlaybackRate = (): number => {
+    if (!videoRef.current) return 1;
+
+    return videoRef.current.playbackRate;
+  };
+
   return {
     togglePlayPause,
     playVideo,
@@ -176,6 +192,8 @@ const useVideoControlEvents = () => {
     paused,
     toggleFullScreen,
     toggleLockUnlockControls,
+    changePlaybackRate,
+    getPlaybackRate,
   };
 };
 

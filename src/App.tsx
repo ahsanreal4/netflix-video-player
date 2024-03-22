@@ -10,6 +10,7 @@ function App() {
         src={VideoInfo.link}
         resizeMode="cover"
         muted={true}
+        // controls={{ disableFullScreenButton: true }}
       />
     </div>
   );

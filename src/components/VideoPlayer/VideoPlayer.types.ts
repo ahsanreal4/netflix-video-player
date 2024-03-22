@@ -104,3 +104,24 @@ export enum VideoEventListeners {
   Ended = "ended",
   Loaded = "loadeddata",
 }
+
+export type PlaybackRates =
+  | "0.25"
+  | "0.5"
+  | "0.75"
+  | "Normal"
+  | "1.25"
+  | "1.5"
+  | "1.75"
+  | "2";
+
+export const PLAYBACK_SPEEDS: PlaybackRates[] = [
+  "0.25",
+  "0.5",
+  "0.75",
+  "Normal",
+  "1.25",
+  "1.5",
+  "1.75",
+  "2",
+];
