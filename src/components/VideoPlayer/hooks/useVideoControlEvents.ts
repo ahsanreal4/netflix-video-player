@@ -23,47 +23,24 @@ const useVideoControlEvents = () => {
 
   const animate = (element: HTMLElement) => {
     const ANIMATION_DURATION = 500;
+    element.style.display = "block";
 
-    element.animate(
-      [
-        {
-          // width: "60px",
-          // height: "60px",
-          opacity: "1",
-          display: "block",
-        },
-        {
-          // width: "80px",
-          // height: "80px",
-          opacity: "0",
-          display: "none",
-        },
-      ],
-      {
-        duration: ANIMATION_DURATION,
-      }
-    );
+    setTimeout(() => {
+      element.style.display = "none";
+    }, ANIMATION_DURATION);
   };
 
   const startAnimation = () => {
     // If loading spinner shows we hide animations
     if (videoLoading) return;
 
-    const animationImage = document.getElementById(
-      "play_pause_animation_image"
-    );
+    setTimeout(() => {
+      const image1 = document.getElementById("play_pause_animation_image");
 
-    // If user clicks on video container so we need to start it when overlay shows
-    if (!animationImage) {
-      setTimeout(() => {
-        const image = document.getElementById("play_pause_animation_image");
-        if (image) animate(image);
-      }, 0);
+      if (!image1) return;
 
-      return;
-    }
-
-    animate(animationImage);
+      animate(image1);
+    }, 0);
   };
 
   const playVideo = () => {

@@ -1,5 +1,4 @@
 import { memo, useEffect, useMemo } from "react";
-import { VideoInfo } from "../../data/VideoPlayer";
 import { VideoPlayerProps } from "./VideoPlayer.types";
 
 import classes from "./VideoPlayer.module.css";
@@ -20,7 +19,7 @@ const VideoPlayer = (props: VideoPlayerProps) => {
     setVideoLoading,
     videoFirstTimeLoaded,
   } = useVideoContext();
-  const { muted, resizeMode } = videoPlayerProps;
+  const { muted, resizeMode, thumbnail } = videoPlayerProps;
 
   const { playVideo, togglePlayPause, rewindVideo, forwardVideo } =
     useVideoControlEvents();
@@ -47,7 +46,7 @@ const VideoPlayer = (props: VideoPlayerProps) => {
         id="video"
         controls={false}
         className={classes.video}
-        poster={VideoInfo.waitingImage}
+        poster={thumbnail}
         muted={muted}
         style={{ objectFit: resizeMode }}
         preload="auto"
@@ -61,7 +60,7 @@ const VideoPlayer = (props: VideoPlayerProps) => {
         }}
       />
     ),
-    [muted, resizeMode, videoFirstTimeLoaded]
+    [muted, resizeMode, videoFirstTimeLoaded, thumbnail]
   );
 
   return (

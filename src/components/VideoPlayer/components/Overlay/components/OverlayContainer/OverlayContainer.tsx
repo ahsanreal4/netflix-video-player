@@ -6,7 +6,7 @@ import PlayPauseAnimation from "./components/PlayPauseAnimation";
 import OverlayControls from "./components/OverlayControls";
 
 const OverlayContainer = () => {
-  const { lockControls, videoPlayerProps, videoFirstTimeLoaded } =
+  const { lockControls, videoPlayerProps, videoFirstTimeLoaded, videoLoading } =
     useVideoContext();
   const { disableControls, controls } = videoPlayerProps;
   const { disableBackArrow } = controls;
@@ -15,7 +15,7 @@ const OverlayContainer = () => {
     <div className={classes.overlay_container}>
       <div data-attr="toggle" className={classes.overlay_top_container} />
       <div data-attr="toggle" className={classes.overlay_bottom_container} />
-      {isMobile ? null : <PlayPauseAnimation />}
+      {isMobile || videoLoading ? null : <PlayPauseAnimation />}
       {lockControls ||
       videoFirstTimeLoaded == false ||
       disableControls ? null : (

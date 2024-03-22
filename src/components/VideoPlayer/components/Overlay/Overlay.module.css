@@ -51,7 +51,7 @@
   width: 100%;
 }
 
-.play_pause_animation_container > img {
+.play_pause_animation_container > svg {
   width: 75px;
   height: 75px;
 

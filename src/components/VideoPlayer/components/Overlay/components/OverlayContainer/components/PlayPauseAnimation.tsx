@@ -1,7 +1,8 @@
 import classes from "../../../Overlay.module.css";
 
-import { Images } from "../../../../../VideoPlayer.assets";
 import { useVideoContext } from "../../../../../context/VideoContextProvider";
+import Play from "../../../../../assets/play";
+import Pause from "../../../../../assets/pause";
 
 const PlayPauseAnimation = () => {
   const { paused } = useVideoContext();
@@ -12,12 +13,11 @@ const PlayPauseAnimation = () => {
       id="play_pause_animation_container"
       className={classes.play_pause_animation_container}
     >
-      <img
-        data-attr="toggle"
-        id="play_pause_animation_image"
-        // @ts-expect-error
-        src={paused ? Images.Pause : Images.Play}
-      />
+      {paused ? (
+        <Play id="play_pause_animation_image" />
+      ) : (
+        <Pause id="play_pause_animation_image" />
+      )}
     </div>
   );
 };

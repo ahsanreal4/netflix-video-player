@@ -1,6 +1,7 @@
+import Pause from "../../../../../assets/pause";
+import Play from "../../../../../assets/play";
 import { useVideoContext } from "../../../../../context/VideoContextProvider";
 import useVideoControlEvents from "../../../../../hooks/useVideoControlEvents";
-import { Images } from "../../../../../VideoPlayer.assets";
 
 const PlayPauseButton = () => {
   const { videoPlayerProps, paused } = useVideoContext();
@@ -11,14 +12,9 @@ const PlayPauseButton = () => {
   return (
     <>
       {controls.disablePlayPauseButton ? null : (
-        <img
-          className={"icon"}
-          // @ts-expect-error
-          src={paused ? Images.Play : Images.Pause}
-          width={32}
-          height={32}
-          onClick={togglePlayPause}
-        />
+        <div onClick={togglePlayPause}>
+          {paused ? <Play className="icon" /> : <Pause className="icon" />}
+        </div>
       )}
     </>
   );

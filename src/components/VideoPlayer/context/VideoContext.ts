@@ -5,7 +5,7 @@ import {
   VideoPlayerProps,
 } from "../VideoPlayer.types";
 
-interface VideoContextState {
+type VideoContextState = {
   paused: boolean;
   fullscreen: boolean;
   videoPlayerProps: IVideoPlayerDefaultProps;
@@ -32,7 +32,7 @@ interface VideoContextState {
   setVideoFirstTimeLoaded: React.Dispatch<React.SetStateAction<boolean>>;
   setShowPlaybackSettings: React.Dispatch<React.SetStateAction<boolean>>;
   initializeVideoProps: (props: VideoPlayerProps) => void;
-}
+};
 
 const INITIAL_STATE: VideoContextState = {
   fullscreen: false,
