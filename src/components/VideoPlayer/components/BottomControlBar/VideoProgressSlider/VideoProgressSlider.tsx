@@ -5,6 +5,7 @@ import { useVideoContext } from "../../../context/VideoContextProvider";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { VideoEventListeners } from "../../../VideoPlayer.types";
+import useVideoControlEvents from "../../../hooks/useVideoControlEvents";
 
 const color = "red";
 
@@ -12,6 +13,8 @@ const VideoProgressSlider = () => {
   const { videoRef, paused, isLiveVideo, videoPlayerProps } = useVideoContext();
   const { controls } = videoPlayerProps;
   const { disableProgressBar, disableTime } = controls;
+
+  const { hideOtherControls } = useVideoControlEvents();
 
   const [currentTime, setCurrentTime] = useState<string>("");
   const [videoTotalTime, setVideoTotalTime] = useState<string>("");
@@ -140,6 +143,7 @@ const VideoProgressSlider = () => {
             },
           }}
           onChange={(value: number | number[]) => {
+            hideOtherControls("progress_slider");
             if (typeof value == "number") {
               if (typeof videoRef.current?.currentTime != "number") return;
 

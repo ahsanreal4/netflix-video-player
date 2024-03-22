@@ -3,21 +3,42 @@ import classes from "./PlaybackSpeed.module.css";
 import PlaybackSpeedIcon from "../../../assets/playback-speed";
 import { useRef, useState } from "react";
 import PlaybackSettings from "./components/PlaybackSettings";
+import { isMobile } from "react-device-detect";
+import { useVideoContext } from "../../../context/VideoContextProvider";
 
 const PlaybackSpeed = () => {
+  const {
+    showPlaybackSettings: showPlaybackSettingsState,
+    setShowPlaybackSettings: setShowPlaybackSettingsState,
+  } = useVideoContext();
   const [showPlaybackSettings, setShowPlaybackSettings] = useState(false);
   const isMouseOnIconRef = useRef<boolean>(false);
   const isMouseOnContainerRef = useRef<boolean>(false);
 
-  const togglePlaybackSettings = () => {
+  const togglePlaybackSetting = () => {
+    if (isMobile) {
+      setShowPlaybackSettingsState((prev) => !prev);
+      return;
+    }
+
     setShowPlaybackSettings((prev) => !prev);
   };
 
   const showPlaybackSetting = () => {
+    if (isMobile) {
+      setShowPlaybackSettingsState((prev) => !prev);
+      return;
+    }
+
     setShowPlaybackSettings(true);
   };
 
   const hidePlaybackSettings = () => {
+    if (isMobile) {
+      setShowPlaybackSettingsState((prev) => !prev);
+      return;
+    }
+
     setShowPlaybackSettings(false);
   };
 
@@ -55,16 +76,30 @@ const PlaybackSpeed = () => {
 
   return (
     <div className={classes.container}>
-      {showPlaybackSettings ? (
+      {isMobile == false && showPlaybackSettings ? (
         <PlaybackSettings
           isMouseOnContainerRef={isMouseOnContainerRef}
           isMouseOnIconRef={isMouseOnIconRef}
           setShowPlaybackSettings={setShowPlaybackSettings}
         />
       ) : null}
-      <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-        <PlaybackSpeedIcon className="icon small_icon" />
-      </div>
+      {isMobile && showPlaybackSettingsState ? (
+        <PlaybackSettings
+          isMouseOnContainerRef={isMouseOnContainerRef}
+          isMouseOnIconRef={isMouseOnIconRef}
+          setShowPlaybackSettings={setShowPlaybackSettingsState}
+        />
+      ) : null}
+
+      {isMobile ? (
+        <div onClick={togglePlaybackSetting}>
+          <PlaybackSpeedIcon className="icon small_icon" />
+        </div>
+      ) : (
+        <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+          <PlaybackSpeedIcon className="icon small_icon" />
+        </div>
+      )}
     </div>
   );
 };

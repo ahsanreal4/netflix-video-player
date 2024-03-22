@@ -1,7 +1,10 @@
+import classes from "../PlaybackSpeed.module.css";
+
 import { MutableRefObject, useEffect, useState } from "react";
 import { PLAYBACK_SPEEDS, PlaybackRates } from "../../../../VideoPlayer.types";
 import useVideoControlEvents from "../../../../hooks/useVideoControlEvents";
-import classes from "../PlaybackSpeed.module.css";
+import { isMobile } from "react-device-detect";
+import { useVideoContext } from "../../../../context/VideoContextProvider";
 
 interface PlaybackSettingsProps {
   isMouseOnContainerRef: MutableRefObject<boolean>;
@@ -14,6 +17,8 @@ const PlaybackSettings = ({
   isMouseOnIconRef,
   setShowPlaybackSettings,
 }: PlaybackSettingsProps) => {
+  const { setShowPlaybackSettings: setShowPlaybackSettingsState } =
+    useVideoContext();
   const { getPlaybackRate, changePlaybackRate } = useVideoControlEvents();
   const [playbackRate, setPlaybackRate] = useState<number>(1);
 
@@ -21,8 +26,19 @@ const PlaybackSettings = ({
     setPlaybackRate(getPlaybackRate());
   }, []);
 
+  const hidePlaybackSettings = () => {
+    setShowPlaybackSettings(false);
+    if (isMobile) setShowPlaybackSettingsState(false);
+  };
+
   const updatePlaybacKRate = (rate: PlaybackRates) => {
     changePlaybackRate(rate);
+
+    if (isMobile) {
+      hidePlaybackSettings();
+      return;
+    }
+
     setPlaybackRate(getPlaybackRate());
   };
 
@@ -49,7 +65,7 @@ const PlaybackSettings = ({
       )
         return;
 
-      setShowPlaybackSettings(false);
+      hidePlaybackSettings();
     }, WAIT_TIMEOUT);
   };
 

@@ -17,6 +17,7 @@ interface VideoContextState {
   showOverlay: boolean;
   unableToPlayVideo: boolean;
   lockControls: boolean;
+  showPlaybackSettings: boolean;
 
   setFullscreen: React.Dispatch<React.SetStateAction<boolean>>;
   setPaused: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,6 +30,7 @@ interface VideoContextState {
   setUnableToPlayVideo: React.Dispatch<React.SetStateAction<boolean>>;
   setLockControls: React.Dispatch<React.SetStateAction<boolean>>;
   setVideoFirstTimeLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowPlaybackSettings: React.Dispatch<React.SetStateAction<boolean>>;
   initializeVideoProps: (props: VideoPlayerProps) => void;
 }
 
@@ -44,6 +46,7 @@ const INITIAL_STATE: VideoContextState = {
   showOverlay: false,
   unableToPlayVideo: false,
   lockControls: false,
+  showPlaybackSettings: false,
 
   setFullscreen: () => {},
   setPaused: () => {},
@@ -55,6 +58,7 @@ const INITIAL_STATE: VideoContextState = {
   setUnableToPlayVideo: () => {},
   setLockControls: () => {},
   setVideoFirstTimeLoaded: () => {},
+  setShowPlaybackSettings: () => {},
 };
 
 const VideoContext = createContext(INITIAL_STATE);

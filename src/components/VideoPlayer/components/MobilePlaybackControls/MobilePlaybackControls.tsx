@@ -5,9 +5,11 @@ import RewindButton from "../BottomControlBar/VideoPlaybackControls/components/P
 import classes from "./MobilePlaybackControls.module.css";
 
 const MobilePlaybackControls = () => {
-  const { videoPlayerProps, isLiveVideo } = useVideoContext();
+  const { videoPlayerProps, isLiveVideo, videoLoading } = useVideoContext();
   const { controls } = videoPlayerProps;
   const { disableForwardRewindButtons, disablePlayPauseButton } = controls;
+
+  if (videoLoading) return null;
 
   return (
     <div className={classes.container} data-attr="toggle">

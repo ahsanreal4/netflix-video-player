@@ -27,6 +27,7 @@ export const VideoContextProvider = ({
     useState<IVideoPlayerDefaultProps>(VideoPlayerDefaultProps);
   const [showOverlay, setShowOverlay] = useState(false);
   const [unableToPlayVideo, setUnableToPlayVideo] = useState(false);
+  const [showPlaybackSettings, setShowPlaybackSettings] = useState(false);
 
   const initializeVideoProps = (props: VideoPlayerProps) => {
     if (props.isLive) setIsLiveVideo(true);
@@ -88,6 +89,8 @@ export const VideoContextProvider = ({
         setLockControls,
         videoFirstTimeLoaded,
         setVideoFirstTimeLoaded,
+        showPlaybackSettings,
+        setShowPlaybackSettings,
       }}
     >
       {children}

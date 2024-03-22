@@ -15,6 +15,8 @@ const useVideoControlEvents = () => {
     setLockControls,
     setVideoPlayerProps,
     videoLoading,
+    setShowPlaybackSettings,
+    lockControls,
   } = useVideoContext();
 
   const { muted } = videoPlayerProps;
@@ -87,6 +89,7 @@ const useVideoControlEvents = () => {
   };
 
   function togglePlayPause() {
+    hideOtherControls("play_pause");
     if (!videoRef.current) return;
 
     if (videoRef.current.paused) {
@@ -97,18 +100,23 @@ const useVideoControlEvents = () => {
   }
 
   function forwardVideo(time: number = 10) {
+    hideOtherControls("rewind_forward");
+
     if (!videoRef.current) return;
 
     videoRef.current.currentTime += time;
   }
 
   function rewindVideo(time: number = 10) {
+    hideOtherControls("rewind_forward");
+
     if (!videoRef.current) return;
 
     videoRef.current.currentTime -= time;
   }
 
   const toggleVolume = (volume: number = Volume.Full) => {
+    hideOtherControls("volume");
     if (!videoRef.current) return;
     if (muted == true) {
       setVideoPlayerProps({ ...videoPlayerProps, muted: false });
@@ -153,6 +161,8 @@ const useVideoControlEvents = () => {
   };
 
   const toggleFullScreen = () => {
+    hideOtherControls("fullscreen");
+
     if (fullscreen) {
       exitFullscreen();
     } else {
@@ -161,6 +171,10 @@ const useVideoControlEvents = () => {
   };
 
   const toggleLockUnlockControls = () => {
+    if (!lockControls) {
+      hideOtherControls("lock");
+    }
+
     setLockControls((prev) => !prev);
   };
 
@@ -180,6 +194,20 @@ const useVideoControlEvents = () => {
     return videoRef.current.playbackRate;
   };
 
+  function hideOtherControls(
+    currentControl:
+      | "fullscreen"
+      | "play_pause"
+      | "rewind_forward"
+      | "volume"
+      | "playback"
+      | "lock"
+      | "progress_slider"
+  ) {
+    if (currentControl != "playback" && isMobile)
+      setShowPlaybackSettings(false);
+  }
+
   return {
     togglePlayPause,
     playVideo,
@@ -194,6 +222,7 @@ const useVideoControlEvents = () => {
     toggleLockUnlockControls,
     changePlaybackRate,
     getPlaybackRate,
+    hideOtherControls,
   };
 };
 

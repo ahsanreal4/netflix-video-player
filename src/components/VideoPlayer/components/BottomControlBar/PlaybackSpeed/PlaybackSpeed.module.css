@@ -27,3 +27,19 @@
   background-color: rgba(192, 182, 182, 0.24);
   cursor: pointer;
 }
+
+@media (pointer: none), (pointer: coarse) {
+  .playback_settings_container {
+    bottom: 50px;
+    height: 200px;
+    overflow: scroll;
+  }
+
+  .playback_speeds_container {
+    gap: 0px;
+  }
+
+  .playback_speeds_item > p {
+    font-size: 14px;
+  }
+}
