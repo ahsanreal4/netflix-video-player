@@ -1,5 +1,5 @@
-# Making a VideoPlyare NPM Package for React
+## Making a Video Player NPM Package for React
 
-Videoplayer has support of HLS live streaming as well. Video player is highly customizeable and responsive.
+Videoplayer supports HLS live streaming and other video formats as well. Video player is highly customizeable and responsive. 
 
-Videoplayer has lock screen functionality for mobile as well.
+Features like lock screen functionality for mobiles, handling error and loading states for videos are also implemented.
